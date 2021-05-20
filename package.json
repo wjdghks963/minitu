@@ -1,0 +1,19 @@
+{
+  "name": "wetube_ver2",
+  "version": "1.0.0",
+  "description": "clone coding",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wjdghks963/wetube_ver2.git"
+  },
+  "author": "Choi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wjdghks963/wetube_ver2/issues"
+  },
+  "homepage": "https://github.com/wjdghks963/wetube_ver2#readme"
+}
