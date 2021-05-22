@@ -12,3 +12,9 @@ babel.config.json >> @babel/preset-env
 ## server
 
 항상 켜져 있는 온라인에 연결된 컴퓨터, request를 listen하고 있음
+브라우저가 request하고 반응함
+GET = 홈페이지를 가져와라
+// req,res는 express에서 나온것
+const handleHome = (req, res) => {
+return res.end(); // res.end(); = res를 종료 시킴 res.send("~~"); = ()안에 있는 것을 보냄
+};
