@@ -1,20 +1,21 @@
 import express from "express";
+import morgan from "morgan";
 const PORT = 4000;
 
 const app = express();
+const logger = morgan("dev"); // logger(morgan("dev"))은 middleware(res,req,next를 가진 function)을 return해줌
 
-const logger = (req, res, next) => {
+const home = (req, res) => {
+  return res.send("hello");
+};
+const login = (req, res, next) => {
   console.log(`${req.method} ${req.url}`);
   next();
 };
 
-// req,res는 express에서 나온것
-const handleHome = (req, res) => {
-  return res.end(); // res.end(); = res를 종료 시킴 res.send("~~"); = ()안에 있는 것을 보냄
-};
-
-app.get("/", logger, handleHome);
-
+app.use(logger("dev"));
+app.get("/", home);
+app.get("/login", login);
 const handelListening = () =>
   console.log(`Server listening on http://loaclhost:${PORT}`);
 

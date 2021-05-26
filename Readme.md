@@ -18,7 +18,6 @@ GET = 홈페이지를 가져와라
 const handleHome = (req, res) => {
 return res.end();
 // res.end(); = res를 종료 시킴, res.send("~~"); = ()안에 있는 것을 보냄
-
 };
 get("route", handler) use listen
 
@@ -28,5 +27,8 @@ req <> middleware <> res
 
 미들웨어 안에 있는 next가 없는 return은 미들웨어를 중단 시킴
 == 다음 것을 실행시키지 않음 따라서 마지막 controller은 next를 안씀
+res.send는 마지막에 하나만 == use나 get안에 많은 middleware가 있어도 처음 send만 실행함
 
 get 위에 use안에 미들웨어를 순서대로 넣어서 사용하면 get안에 미들웨어로서 안넣어도 됨
+
+morgan("dev")은 middleware(res,req,next를 가진 function)을 return해줌
