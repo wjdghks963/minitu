@@ -1,3 +1,21 @@
+# Wetube Reloaded
+
+## Router
+
+/ -> Home
+/join -> Join
+/login -> Login
+/search -> Search
+
+/users/edit -> Edit user
+/users/delete -> Delete user
+
+/videos/watch- -> Watch Video
+/videos/edit -> Edit Video
+/videos/delete -> Delete Video
+/videos/comment -> Comment on a video
+/videos/comments/delete -> Delete A Comment of a Video
+
 ## json
 
 scripts는 실행하고 싶은 것
@@ -32,3 +50,5 @@ res.send는 마지막에 하나만 == use나 get안에 많은 middleware가 있�
 get 위에 use안에 미들웨어를 순서대로 넣어서 사용하면 get안에 미들웨어로서 안넣어도 됨
 
 morgan("dev")은 middleware(res,req,next를 가진 function)을 return해줌
+
+> > method, route, status code, 응답시간을 console log에 나타냄

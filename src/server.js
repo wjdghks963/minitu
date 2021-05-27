@@ -1,22 +1,19 @@
 import express from "express";
 import morgan from "morgan";
+import globalRouter from "./routers/globalRouter";
+import videoRouter from "./routers/videoRouter";
+import userRouter from "./routers/userRouter";
 const PORT = 4000;
 
 const app = express();
 const logger = morgan("dev"); // logger(morgan("dev"))은 middleware(res,req,next를 가진 function)을 return해줌
+app.use(logger);
 
-const home = (req, res) => {
-  return res.send("hello");
-};
-const login = (req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-};
+app.use("/", globalRouter);
+app.use("/videos", videoRouter);
+app.use("/users", userRouter);
 
-app.use(logger("dev"));
-app.get("/", home);
-app.get("/login", login);
-const handelListening = () =>
+const handleListening = () =>
   console.log(`Server listening on http://loaclhost:${PORT}`);
 
-app.listen(PORT, handelListening); // listen에는 callback있음
+app.listen(PORT, handleListening); // listen에는 callback있음
