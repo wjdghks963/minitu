@@ -52,3 +52,8 @@ get 위에 use안에 미들웨어를 순서대로 넣어서 사용하면 get안�
 morgan("dev")은 middleware(res,req,next를 가진 function)을 return해줌
 
 > > method, route, status code, 응답시간을 console log에 나타냄
+
+## Router
+
+app.use("/",global) >> global.get("/home",~~)
+export controller >> controller를 하나 씩 export
