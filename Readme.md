@@ -7,12 +7,15 @@
 /login -> Login
 /search -> Search
 
-/users/edit -> Edit user
-/users/delete -> Delete user
+/users/:id -> See User
+/users/logout -> Log Out
+/users/edit -> Edit My Profile
+/users/delete -> Delete My Profile
 
-/videos/watch- -> Watch Video
-/videos/edit -> Edit Video
-/videos/delete -> Delete Video
+/videos/:id -> See Video
+/videos/:id/edit ->Edit Video
+/videos/:id/delete -> Delete Video
+/videos/upload -> Upload Video
 /videos/comment -> Comment on a video
 /videos/comments/delete -> Delete A Comment of a Video
 
@@ -57,3 +60,10 @@ morgan("dev")은 middleware(res,req,next를 가진 function)을 return해줌
 
 app.use("/",global) >> global.get("/home",~~)
 export controller >> controller를 하나 씩 export
+
+## Pug
+
+app.set("view engine", pug) == pug를 템플릿으로 사용
+! pug파일이 view dir안에 있어야함 view dir은 현재 작업중인 폴더(cwd) 안에 있어야함
+!! cwd는 노드를 시작하는 dir이다
+함수 = (req,res) => {res.render("pug파일 이름")} ==> pug를 렌더링함
