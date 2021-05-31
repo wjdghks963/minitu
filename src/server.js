@@ -8,6 +8,7 @@ const PORT = 4000;
 const app = express();
 const logger = morgan("dev"); // logger(morgan("dev"))은 middleware(res,req,next를 가진 function)을 return해줌
 app.set("view engine", "pug"); // view engine 템플릿을 pug로 설정
+app.set("views", process.cwd() + "/src/views"); // views파일이 scr안에 있게 만들었음
 app.use(logger);
 app.use("/", globalRouter);
 app.use("/videos", videoRouter);

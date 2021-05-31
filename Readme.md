@@ -67,3 +67,6 @@ app.set("view engine", pug) == pug를 템플릿으로 사용
 ! pug파일이 view dir안에 있어야함 view dir은 현재 작업중인 폴더(cwd) 안에 있어야함
 !! cwd는 노드를 시작하는 dir이다
 함수 = (req,res) => {res.render("pug파일 이름")} ==> pug를 렌더링함
+
+extends base.pug => base.pug로 부터 뼈대를 가져옴
+block content => 이 블록 안에 넣고 싶은 것을 넣는다.
