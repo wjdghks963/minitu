@@ -70,3 +70,6 @@ app.set("view engine", pug) == pug를 템플릿으로 사용
 
 extends base.pug => base.pug로 부터 뼈대를 가져옴
 block content => 이 블록 안에 넣고 싶은 것을 넣는다.
+
+h1 #{var} === h1=var
+mixin의 이름(받게될 객체)
