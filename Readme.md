@@ -82,6 +82,8 @@ mixin의 이름(받게될 객체)
 ## mongodb, mongoose
 
 DB, mongoose는 몽고디비와 node.js를 연결 시켜주는 역
+db를 mongoose와 연결시켜 video model을 인식시킴
+models/Video.js => 데이터가 어떻게 생겼는지 정의
 
 ## CRUD
 
