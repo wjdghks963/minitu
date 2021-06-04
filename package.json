@@ -18,6 +18,7 @@
   "homepage": "https://github.com/wjdghks963/wetube_ver2#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "mongoose": "^5.12.12",
     "pug": "^3.0.2"
   },
   "devDependencies": {

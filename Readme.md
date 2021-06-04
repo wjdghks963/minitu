@@ -61,6 +61,11 @@ morgan("dev")은 middleware(res,req,next를 가진 function)을 return해줌
 app.use("/",global) >> global.get("/home",~~)
 export controller >> controller를 하나 씩 export
 
+videoRouter.route("/:id(\\d+)").get(getEdit).post(postEdit);
+은 밑 두줄과 같다.
+videoRouter.get("/:id(\\d+)/edit", getEdit);
+videoRouter.post("/:id(\\d+)/edit", postEdit);
+
 ## Pug
 
 app.set("view engine", pug) == pug를 템플릿으로 사용
@@ -73,3 +78,14 @@ block content => 이 블록 안에 넣고 싶은 것을 넣는다.
 
 h1 #{var} === h1=var
 mixin의 이름(받게될 객체)
+
+## mongodb, mongoose
+
+DB, mongoose는 몽고디비와 node.js를 연결 시켜주는 역
+
+## CRUD
+
+Create
+Read
+Update
+Delete
