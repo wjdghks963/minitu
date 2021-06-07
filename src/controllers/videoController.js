@@ -30,9 +30,10 @@ export const getUpload = (req, res) => {
   return res.render("upload", { pageTitle: "Upload Video" });
 };
 
-export const postUpload = (req, res) => {
+export const postUpload = async (req, res) => {
   const { title, description, hashtags } = req.body;
-  const video = new Video({
+  await Video.create({
+    // video model이 존재하는 경우 create 가능
     title,
     description,
     createdAt: Date.now(),
@@ -42,5 +43,6 @@ export const postUpload = (req, res) => {
       rating: 0,
     },
   });
+
   return res.redirect("/");
 };

@@ -54,7 +54,7 @@ get 위에 use안에 미들웨어를 순서대로 넣어서 사용하면 get안�
 
 morgan("dev")은 middleware(res,req,next를 가진 function)을 return해줌
 
-> > method, route, status code, 응답시간을 console log에 나타냄
+method, route, status code, 응답시간을 console log에 나타냄
 
 ## Router
 
@@ -84,6 +84,8 @@ mixin의 이름(받게될 객체)
 DB, mongoose는 몽고디비와 node.js를 연결 시켜주는 역
 db를 mongoose와 연결시켜 video model을 인식시킴
 models/Video.js => 데이터가 어떻게 생겼는지 정의
+
+새롭게 생성하는 object 내에 id를 랜덤으로 부여해줌
 
 ## CRUD
 
