@@ -87,7 +87,14 @@ models/Video.js => 데이터가 어떻게 생겼는지 정의
 
 ## CRUD
 
-Create
-Read
-Update
-Delete
+Create, Read, Update, Delete
+
+ex) www.ee.com/post/23/jug?title=hello
+
+req.params = route에서 예정되어 있는 value ex) { id:"23",name:"jug"}
+req.body = request body에 key-value의 데이터가 담긴 객체 프로퍼티, JSON 객체에 접근 가능
+req.query = url 뒤 query문 => {title:"hello"}
+
+## DB
+
+### Query
