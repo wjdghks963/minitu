@@ -81,8 +81,6 @@ mixin의 이름(받게될 객체)
 
 ### Mixin
 
-
-
 ## mongodb, mongoose
 
 DB, mongoose는 몽고디비와 node.js를 연결 시켜주는 역
@@ -90,6 +88,15 @@ db를 mongoose와 연결시켜 video model을 인식시킴
 models/Video.js => 데이터가 어떻게 생겼는지 정의
 
 새롭게 생성하는 object 내에 id를 랜덤으로 부여해줌
+
+Video.findByIdAndUpdate(id, update할 것)
+Video.findById(id) // id를 찾음
+Video.exists() // 결과 true or false ()안엔 filter
+
+## Model
+
+Video = model
+video = DB 안에 있는 object
 
 ## CRUD
 
