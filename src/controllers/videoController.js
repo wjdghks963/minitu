@@ -1,4 +1,4 @@
-import Video from "../models/Video";
+import Video, { formatHashtags } from "../models/Video";
 
 export const home = async (req, res) => {
   try {
@@ -37,7 +37,7 @@ export const postEdit = async (req, res) => {
   await Video.findByIdAndUpdate(id, {
     title,
     desctiption,
-    hashtags,
+    hashtags: Video.formatHashtags(hashtags),
   });
   video.title = title;
   video.description = description;
@@ -58,7 +58,7 @@ export const postUpload = async (req, res) => {
       // video model이 존재하는 경우 create 가능
       title,
       description,
-      hashtags: hashtags.split(",").map((word) => `#${word}`),
+      hashtags: Video.formatHashtags(hashtags),
     });
     return res.redirect("/");
   } catch (error) {
