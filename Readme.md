@@ -92,6 +92,7 @@ models/Video.js => 데이터가 어떻게 생겼는지 정의
 Video.findByIdAndUpdate(id, update할 것)
 Video.findById(id) // id를 찾음
 Video.exists() // 결과 true or false ()안엔 filter
+Video.findByIdAndDelete & findOneAndRemove ==> 특별한 이유 없는 이상 대부분 delete
 
 ## Model
 
