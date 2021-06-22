@@ -109,6 +109,8 @@ req.params = route에서 예정되어 있는 value ex) { id:"23",name:"jug"}
 req.body = request body에 key-value의 데이터가 담긴 객체 프로퍼티, JSON 객체에 접근 가능
 req.query = url 뒤 query문 => {title:"hello"}
 
+## Regular Expression
+
 ## DB
 
 ### Query
