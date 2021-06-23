@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   location: String,
 });
 
-// 생성되는 password 암호화 await 뒤 this.password는 User에서 생성되는 password
+// 생성되는 password 암호화 this.password는 User에서 생성되는 password
 userSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, 5);
 });
