@@ -18,17 +18,43 @@ export const postJoin = async (req, res) => {
     });
   }
 
-  await User.create({
-    name,
-    username,
-    email,
-    password,
-    location,
-  });
-  res.redirect("/login");
+  try {
+    await User.create({
+      name,
+      username,
+      email,
+      password,
+      location,
+    });
+    res.redirect("/login");
+  } catch (error) {
+    {
+      return res.status(400).render("join", {
+        pageTitle: "Upload Video",
+        errorMessage: error._message,
+      });
+    }
+  }
 };
+
+export const postLogin = async (req, res) => {
+  const { username, password } = req.body;
+  const exists = await User.exists({ username });
+  // 계정이 존재하는 체크
+  if (!exists) {
+    return res.status(400).render("login", {
+      pageTitle: "Login",
+      errorMessage: "입력한 username을 가진 유저가 존재하지 않습니다.",
+    });
+  }
+
+  // password 일치하는지 체크
+  res.end();
+};
+
+export const getLogin = (req, res) =>
+  res.render("login", { pageTitle: "Login" });
 export const edit = (req, res) => res.send("Edit User");
 export const remove = (req, res) => res.send("Remove User");
-export const login = (req, res) => res.send("Login");
 export const logout = (req, res) => res.send("Log Out");
 export const see = (req, res) => res.send("See");
