@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import session from "express-session";
 import User from "../models/User";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
@@ -58,7 +59,9 @@ export const postLogin = async (req, res) => {
       errorMessage: "password가 다릅니다",
     });
   }
-  res.end();
+  req.session.loggedIn = true;
+  req.session.user = user;
+  return res.redirect("/");
 };
 
 export const getLogin = (req, res) =>
