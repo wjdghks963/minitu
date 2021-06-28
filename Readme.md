@@ -114,3 +114,12 @@ req.query = url 뒤 query문 => {title:"hello"}
 ## DB
 
 ### Query
+
+## Session, Cookies
+
+브라우저와 벡엔드 사이의 memory, history 같은 것
+브라우저와 벡엔드 사이에 관계가 존재해야함
+session id가 있으면 session object에 정보 추가 가능
+브라우저마다 다른 session id를 가지고 있고 쿠키 안엔 session id를 가지고 있다.
+
+브라우저가 요청을 보낼때마다 쿠키에서 session id를 가져오면 서버가 그 session id를 읽고 어떤 브라우저인지 알 수 있다.

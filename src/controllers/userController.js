@@ -1,6 +1,8 @@
+import bcrypt from "bcrypt";
 import User from "../models/User";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
+
 export const postJoin = async (req, res) => {
   const { name, username, email, password, password2, location } = req.body;
   const pageTitle = "Join";
@@ -39,16 +41,23 @@ export const postJoin = async (req, res) => {
 
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
-  const exists = await User.exists({ username });
+  const pageTitle = "Login";
+  const user = await User.exists({ username });
   // 계정이 존재하는 체크
-  if (!exists) {
+  if (!user) {
     return res.status(400).render("login", {
-      pageTitle: "Login",
+      pageTitle,
       errorMessage: "입력한 username을 가진 유저가 존재하지 않습니다.",
     });
   }
-
   // password 일치하는지 체크
+  const ok = await bcrypt.compare(password, user.password);
+  if (!ok) {
+    return res.status(400).render("login", {
+      pageTitle,
+      errorMessage: "password가 다릅니다",
+    });
+  }
   res.end();
 };
 

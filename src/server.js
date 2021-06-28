@@ -1,5 +1,6 @@
 import express from "express";
 import morgan from "morgan";
+import session from "express-session";
 import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRouter";
 import userRouter from "./routers/userRouter";
@@ -10,6 +11,15 @@ app.set("view engine", "pug"); // view engine 템플릿을 pug로 설정
 app.set("views", process.cwd() + "/src/views"); // views파일이 scr안에 있게 만들었음
 app.use(logger);
 app.use(express.urlencoded({ extended: true })); // express가 form의 값들을 이해할 수 있게하고 js형식으로 변환
+
+app.use(
+  session({
+    secret: "",
+    resave: true,
+    saveUninitialized: true,
+  })
+);
+
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
