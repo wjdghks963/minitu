@@ -115,11 +115,21 @@ req.query = url 뒤 query문 => {title:"hello"}
 
 ### Query
 
+## bcrypt
+
+password를 해쉬로 변환해줌
+
 ## Session, Cookies
 
-브라우저와 벡엔드 사이의 memory, history 같은 것
-브라우저와 벡엔드 사이에 관계가 존재해야함
+**브라우저와 벡엔드 사이의 memory, history 같은 것
+브라우저와 벡엔드 사이에 관계가 존재해야함**
+
+express-session은 브라우저가 백엔드와 상호 작용할 때마다 session이라는 middleware라는 곳에 cookie를 보내줌, cookie는 백엔드가 브라우저에 주는 정보인데 cookie에는 정해진 규칙이 존재해 매번 벡엔드에 req를 할 때 브라우저는 알아서 그 req에 cookie를 붙인다.
+
+cookie에는 어떤 정보든 넣을 수 있으며 여기선 session id를 넣는다.
 session id가 있으면 session object에 정보 추가 가능
 브라우저마다 다른 session id를 가지고 있고 쿠키 안엔 session id를 가지고 있다.
 
 브라우저가 요청을 보낼때마다 쿠키에서 session id를 가져오면 서버가 그 session id를 읽고 어떤 브라우저인지 알 수 있다.
+
+Session store는 session을 저장하는 곳이지만 , 매번 코드를 저장하면 서버가 재시작되면서 이것이 사라짐 테스트를 하는 곳이기 때문

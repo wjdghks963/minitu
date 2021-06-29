@@ -8,13 +8,21 @@ html(lang="ko")
             nav 
                 ul 
                     li
-                        a(href="/vidoes/upload") Upload Video
-                    li
                         a(href="/") Home
+                    if loggedIn
+                        li
+                            a(href="/logout") Log Out
+                        li 
+                            a(href="my-profile") #{loggedUnUser.name}의 Profile                        
+                    else
+                        li
+                            a(href="/join") Join
+                        li
+                            a(href="/login") Login    
                     li 
                         a(href="/search") Search
                     li
-                        a(href="/join") Join
+                        a(href="/vidoes/upload") Upload Video
             h1=pageTitle    // -> #{pageTitle}과 같음
         main
             block content
