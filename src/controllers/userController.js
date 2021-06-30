@@ -64,6 +64,21 @@ export const postLogin = async (req, res) => {
   return res.redirect("/");
 };
 
+export const startGithubLogin = (req, res) => {
+  const baseUrl = `https://github.com/login/oauth/authorize`;
+  // config는 깃헙에서 제공하는 것과 같은 것을 써야 인식된다 내 마음대로 변수설정하면 안됌!
+  const config = {
+    client_id: "9563135e0e1d371b1377",
+    allow_signup: false,
+    scope: "read:user user:email",
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
+  return res.redirect(finalUrl);
+};
+
+export const finishGithubLogin = (req, res) => {};
+
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
 export const edit = (req, res) => res.send("Edit User");

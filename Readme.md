@@ -131,5 +131,15 @@ session id가 있으면 session object에 정보 추가 가능
 브라우저마다 다른 session id를 가지고 있고 쿠키 안엔 session id를 가지고 있다.
 
 브라우저가 요청을 보낼때마다 쿠키에서 session id를 가져오면 서버가 그 session id를 읽고 어떤 브라우저인지 알 수 있다.
+브라우저는 도메인에 따라 쿠키를 저장하며 쿠키는 도메인에 있는 벡엔드로만 전송된다.
 
 Session store는 session을 저장하는 곳이지만 , 매번 코드를 저장하면 서버가 재시작되면서 이것이 사라짐 테스트를 하는 곳이기 때문
+
+## .env
+
+변수는 대문자로
+
+사용시엔 process.env.변수이름
+변수이름(키)는 사용하는 곳과 .env파일 안에 있는 것과 똑같아야함
+
+dotenv 패키지가 .env 파일을 읽고 접근시켜줌 // require("dotenv").config();
