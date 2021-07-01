@@ -1,6 +1,6 @@
-import bcrypt from "bcrypt";
-import session from "express-session";
 import User from "../models/User";
+import fetch from "node-fetch";
+import bcrypt from "bcrypt";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 
@@ -68,7 +68,7 @@ export const startGithubLogin = (req, res) => {
   const baseUrl = `https://github.com/login/oauth/authorize`;
   // config는 깃헙에서 제공하는 것과 같은 것을 써야 인식된다 내 마음대로 변수설정하면 안됌!
   const config = {
-    client_id: "9563135e0e1d371b1377",
+    client_id: process.env.GH_CLIENT,
     allow_signup: false,
     scope: "read:user user:email",
   };
@@ -77,7 +77,54 @@ export const startGithubLogin = (req, res) => {
   return res.redirect(finalUrl);
 };
 
-export const finishGithubLogin = (req, res) => {};
+export const finishGithubLogin = (req, res) => {
+  const baseUrl = "https://github.com/login/oauth/access_token";
+  const config = {
+    client_id: process.env.GH_CLIENT,
+    client_secret: process.env.GH_SECRET,
+    code: req.query.code,
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
+  const tokenRequest = await(
+    await fetch(finalUrl, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+  ).json();
+
+  if ("access_token" in json) {
+    //access api
+    const { access_token } = json;
+    const apiUrl = "https://api.github.com";
+    const userData = awiat(
+      await fetch(`${apiUrl}/user`, {
+        headers: {
+          Authorization: `token ${access_token}`,
+        },
+      })
+    ).json();
+
+    const emailData = awiat(
+      await fetch(`${apiUrl}/user/emails`, {
+        headers: {
+          Authorization: `token ${access_token}`,
+        },
+      })
+    ).json();
+
+    const email = emailData,find(
+      (email) => email.primary === true && email.verified === true
+    );
+    if(!email){
+      return res.redirect("/login");
+    }
+  } else {
+    return res.redirect("/login");
+  }
+};
 
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });

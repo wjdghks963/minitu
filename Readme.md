@@ -143,3 +143,7 @@ Session store는 session을 저장하는 곳이지만 , 매번 코드를 저장�
 변수이름(키)는 사용하는 곳과 .env파일 안에 있는 것과 똑같아야함
 
 dotenv 패키지가 .env 파일을 읽고 접근시켜줌 // require("dotenv").config();
+
+## fetch
+
+javascript fetch함수는 브라우저에서 사용할 수 있는것이기 때문에 node-fetch 패키지를 다운해 node-js에서 사용가능하게 한다.
