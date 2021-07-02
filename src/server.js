@@ -18,6 +18,8 @@ app.use(
   session({
     secret: process.env.COOKIE_SECRET,
     resave: false,
+    // session이 처음 만들어졌을 때 session을 수정하지 않는다면 session은 unintialzied 상태
+    // true === 수정하지 않더라도 저장된다 ,false === 만약 수정시 session은 저장된다.
     saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl: process.env.DB_URL,

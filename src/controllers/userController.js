@@ -59,7 +59,7 @@ export const postLogin = async (req, res) => {
       errorMessage: "password가 다릅니다",
     });
   }
-  // session을 수정할 때만 session을 DB에 저장하고 쿠키를 넘겨주는 것
+  // session을 수정할 때만(session에 loggedIn과 user가 만들어진다) session을 DB에 저장하고 쿠키를 넘겨주는 것
   // 로그인 하는 유저만 쿠키를 남기게함
   req.session.loggedIn = true;
   req.session.user = user;
