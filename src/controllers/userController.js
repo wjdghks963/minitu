@@ -43,7 +43,7 @@ export const postJoin = async (req, res) => {
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const pageTitle = "Login";
-  const user = await User.exists({ username });
+  const user = await User.exists({ username, socialOnly: false });
   // 계정이 존재하는 체크
   if (!user) {
     return res.status(400).render("login", {
@@ -95,9 +95,9 @@ export const finishGithubLogin = (req, res) => {
     })
   ).json();
 
-  if ("access_token" in json) {
+  if ("access_token" in tokenRequest) {
     //access api
-    const { access_token } = json;
+    const { access_token } = tokenRequest;
     const apiUrl = "https://api.github.com";
     const userData = awiat(
       await fetch(`${apiUrl}/user`, {
@@ -121,25 +121,22 @@ export const finishGithubLogin = (req, res) => {
     if (!emailObj) {
       return res.redirect("/login");
     }
-    const existingUser = await User.findOne({ email: emailObj.email });
-    if (existingUser) {
-      req.session.loggedIn = true;
-      req.session.user = existingUser;
-      return res.redirect("/"); // login된 상태로 redirect
-    } else {
-      // create an account
-      const user = await User.create({
+    let user = await User.findOne({ email: emailObj.email });
+    if (!user) {
+      user = await User.create({
+        avatartUrl: userData.avatar_url, // avatarUrl이 없는 user는 email과 password로만 계정을 만들었다는 것을 표현 위해
         name: userData.name,
         username: userData.login,
         email: emailObj.email,
         password: "", // email로만 로그인 password없는 경우
-        socialOnly: true,
+        socialOnly: true, // social login  Only
         location: userData.location,
       });
-      req.session.loggedIn = true;
-      req.session.user = user;
-      return res.redirect("/");
     }
+    // create an account
+    req.session.loggedIn = true;
+    req.session.user = user;
+    return res.redirect("/"); // login된 상태로 redirect
   } else {
     return res.redirect("/login");
   }
@@ -148,6 +145,8 @@ export const finishGithubLogin = (req, res) => {
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
 export const edit = (req, res) => res.send("Edit User");
-export const remove = (req, res) => res.send("Remove User");
-export const logout = (req, res) => res.send("Log Out");
+export const logout = (req, res) => {
+  req.session.destory();
+  return res.redirect("/");
+};
 export const see = (req, res) => res.send("See");
