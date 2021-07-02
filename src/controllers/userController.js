@@ -43,7 +43,7 @@ export const postJoin = async (req, res) => {
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const pageTitle = "Login";
-  const user = await User.exists({ username, socialOnly: false });
+  const user = await User.exists({ username, socialOnly: false }); // username과 password로 로그인 하는 user
   // 계정이 존재하는 체크
   if (!user) {
     return res.status(400).render("login", {
@@ -119,21 +119,24 @@ export const finishGithubLogin = (req, res) => {
       (email) => email.primary === true && email.verified === true
     );
     if (!emailObj) {
+      // notification 둬야함
       return res.redirect("/login");
     }
+    // DB안에서 해당 email찾음
     let user = await User.findOne({ email: emailObj.email });
+    // DB에서 해당 email이 없을 경우 user을 만든다.
+    // socialOnly: true일 경우 github으로 로그인 한것
     if (!user) {
       user = await User.create({
         avatartUrl: userData.avatar_url, // avatarUrl이 없는 user는 email과 password로만 계정을 만들었다는 것을 표현 위해
         name: userData.name,
         username: userData.login,
         email: emailObj.email,
-        password: "", // email로만 로그인 password없는 경우
+        password: "", // email로만 로그인 password없는 경우 === social로 로그인
         socialOnly: true, // social login  Only
         location: userData.location,
       });
     }
-    // create an account
     req.session.loggedIn = true;
     req.session.user = user;
     return res.redirect("/"); // login된 상태로 redirect
@@ -146,7 +149,7 @@ export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
 export const edit = (req, res) => res.send("Edit User");
 export const logout = (req, res) => {
-  req.session.destory();
+  req.session.destory(); // session을 없앰
   return res.redirect("/");
 };
 export const see = (req, res) => res.send("See");
