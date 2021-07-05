@@ -101,7 +101,7 @@ export const finishGithubLogin = (req, res) => {
     //access api
     const { access_token } = tokenRequest;
     const apiUrl = "https://api.github.com";
-    const userData = awiat(
+    const userData = await(
       await fetch(`${apiUrl}/user`, {
         headers: {
           Authorization: `token ${access_token}`,
@@ -109,7 +109,7 @@ export const finishGithubLogin = (req, res) => {
       })
     ).json();
 
-    const emailData = awiat(
+    const emailData = await(
       await fetch(`${apiUrl}/user/emails`, {
         headers: {
           Authorization: `token ${access_token}`,
@@ -159,7 +159,20 @@ export const getEdit = (req, res) => {
   return res.render("edit-profile", { pageTitle: "Edit Profile" });
 };
 
-export const postEdit = (req, res) => {
+export const postEdit = async (req, res) => {
+  const {
+    session: {
+      user: { _id }, //  session에 id는 _id로 저장되어있음
+    },
+    body: { name, email, username, location }, // == const { name, email, username, location } = req.body;
+  } = req;
+  await User.findByIdAndUpdate(_id, {
+    name,
+    email,
+    username,
+    location,
+  });
+
   return res.render("edit-profile");
 };
 

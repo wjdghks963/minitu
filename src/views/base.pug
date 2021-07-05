@@ -16,6 +16,8 @@ html(lang="ko")
                             a(href="/users/logout") Log Out
                         li 
                             a(href="my-profile") #{loggedUnUser.name}의 Profile                        
+                        li
+                            a(href="/vidoes/upload") Upload Video
                     else
                         li
                             a(href="/join") Join
@@ -23,8 +25,7 @@ html(lang="ko")
                             a(href="/login") Login    
                     li 
                         a(href="/search") Search
-                    li
-                        a(href="/vidoes/upload") Upload Video
+                    
             h1=pageTitle    // -> #{pageTitle}과 같음
         main
             block content
