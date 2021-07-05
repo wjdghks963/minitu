@@ -149,9 +149,18 @@ export const finishGithubLogin = (req, res) => {
 
 export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
-export const edit = (req, res) => res.send("Edit User");
+
 export const logout = (req, res) => {
   req.session.destory(); // session을 없앰
   return res.redirect("/");
 };
+
+export const getEdit = (req, res) => {
+  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+};
+
+export const postEdit = (req, res) => {
+  return res.render("edit-profile");
+};
+
 export const see = (req, res) => res.send("See");
