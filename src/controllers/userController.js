@@ -198,4 +198,35 @@ export const postEdit = async (req, res) => {
   return res.redirect("/users/edit");
 };
 
-export const see = (req, res) => res.send("See");
+export const getChangePassword = (req, res) => {
+  if (req.session.user.socialOnly === true) {
+    return redirect("/");
+  }
+  return res.render("users/change-password", { pageTitle: "Change Password" });
+};
+export const postChangePassword = async (req, res) => {
+  const {
+    session: {
+      user: { _id, password },
+    },
+    body: { oldPassword, newPassword, newPasswordConfirmation },
+  } = req;
+  const user = await User.findById(_id);
+  const ok = await bcrypt.compare(oldPassword, user.password);
+  if (!ok) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The current password is incorrect",
+    });
+  }
+  if (newPassword !== newPasswordConfirmation) {
+    return res.status(400).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The password doen't match",
+    });
+  }
+  user.password = newPassword;
+  await user.save(); // user password를 newPassword로 바꾸고 User pre안에 있는 것을 이용해 저장한다.
+
+  return res.redirect("/users/logout");
+};
