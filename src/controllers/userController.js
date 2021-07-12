@@ -165,7 +165,7 @@ export const postEdit = async (req, res) => {
       user: { _id, avatarUrl, email: sessionEmail, username: sessionUsername }, //  session에 있는 user의 id는 _id로 저장되어있음
     },
     body: { name, email, username, location }, // == const { name, email, username, location } = req.body;
-    file,
+    file, // = req.file  안에는 avatar img가 있음
   } = req;
   let searchParam = []; // 빈 배열 안에 email username을 넣고 수정을 하면 그 안에서 같은 것들이 존재하면 에러가 뜨게함
   if (sessioEmail !== email) {
@@ -187,7 +187,7 @@ export const postEdit = async (req, res) => {
   const updateUser = await User.findByIdAndUpdate(
     _id,
     {
-      avatarUrl: file ? file.path : avatarUrl,
+      avatarUrl: file ? file.path : avatarUrl, // 새로운 avatar가 있으면 주소주고 없으면 본래 있는 아바타 Url준다.
       name,
       email,
       username,

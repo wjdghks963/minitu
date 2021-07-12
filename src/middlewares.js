@@ -25,4 +25,4 @@ export const publicOnlyMiddleware = (req, res, next) => {
   }
 };
 
-export const uploadFiles = multer({ dest: "uploads/" });
+export const uploadFiles = multer({ dest: "uploads/" }); // form에서 보낸 파일에 관한 정보를 uploads라는 dir에 보내주고 파일명을 랜덤으로 생성해준다.

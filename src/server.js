@@ -28,6 +28,7 @@ app.use(
 );
 
 app.use(localMiddleware);
+app.use("/uploads", express.static("uploads")); // expose folder >>  사진을 노출시켜준다
 app.use("/", rootRouter);
 app.use("/videos", videoRouter);
 app.use("/users", userRouter);
