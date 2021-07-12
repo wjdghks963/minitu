@@ -1,3 +1,5 @@
+import multer from "multer";
+
 export const localMiddleware = (req, res, next) => {
   res.session.loggedIn = Boolean(req.session.loggedIn); // login TURE or FALSE
   req.locals.siteName = "Wetube"; // siteName
@@ -22,3 +24,5 @@ export const publicOnlyMiddleware = (req, res, next) => {
     return res.redirect("/");
   }
 };
+
+export const uploadFiles = multer({ dest: "uploads/" });
