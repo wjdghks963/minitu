@@ -8,7 +8,11 @@ import {
   startGithubLogin,
   getChangePassword,
 } from "../controllers/userController";
-import { protectedMiddleware, publicOnlyMiddleware } from "../middlewares";
+import {
+  protectedMiddleware,
+  publicOnlyMiddleware,
+  avatarUpload,
+} from "../middlewares";
 
 const userRouter = express.Router();
 
@@ -17,7 +21,7 @@ userRouter
   .route("/edit")
   .all(protectedMiddleware)
   .get(getEdit)
-  .post(uploadFiles.single("avatar"), postEdit);
+  .post(avatarUpload.single("avatar"), postEdit);
 // all함수는 get,post 등 어떤 http method를 사용하든지 해당 middleware를 사용할 수 있게 해준다.
 userRouter
   .route("/password")

@@ -79,7 +79,7 @@ export const startGithubLogin = (req, res) => {
   return res.redirect(finalUrl);
 };
 
-export const finishGithubLogin = (req, res) => {
+export const finishGithubLogin = async (req, res) => {
   const baseUrl = "https://github.com/login/oauth/access_token";
   const config = {
     client_id: process.env.GH_CLIENT,
@@ -88,7 +88,7 @@ export const finishGithubLogin = (req, res) => {
   };
   const params = new URLSearchParams(config).toString();
   const finalUrl = `${baseUrl}?${params}`;
-  const tokenRequest = await(
+  const tokenRequest = await (
     await fetch(finalUrl, {
       method: "POST",
       headers: {
@@ -101,7 +101,7 @@ export const finishGithubLogin = (req, res) => {
     //access api
     const { access_token } = tokenRequest;
     const apiUrl = "https://api.github.com";
-    const userData = await(
+    const userData = await (
       await fetch(`${apiUrl}/user`, {
         headers: {
           Authorization: `token ${access_token}`,
@@ -109,7 +109,7 @@ export const finishGithubLogin = (req, res) => {
       })
     ).json();
 
-    const emailData = await(
+    const emailData = await (
       await fetch(`${apiUrl}/user/emails`, {
         headers: {
           Authorization: `token ${access_token}`,
