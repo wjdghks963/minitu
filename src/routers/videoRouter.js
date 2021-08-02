@@ -3,6 +3,8 @@ import {
   getEdit,
   watch,
   postEdit,
+  getUpload,
+  postUpload,
   deleteVideo,
 } from "../controllers/videoController";
 import { protectedMiddleware, videoUpload } from "../middlewares";
