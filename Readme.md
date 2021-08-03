@@ -94,6 +94,9 @@ Video.findById(id) // id를 찾음
 Video.exists() // 결과 true or false ()안엔 filter
 Video.findByIdAndDelete & findOneAndRemove ==> 특별한 이유 없는 이상 대부분 delete
 
+Model.findById(id).populate("props")
+// ex) props:fasddf454fds65 >> props: props's all object
+
 ## Model
 
 Video = model
@@ -149,3 +152,12 @@ dotenv 패키지가 .env 파일을 읽고 접근시켜줌 // require("dotenv").c
 ## fetch
 
 javascript fetch함수는 브라우저에서 사용할 수 있는것이기 때문에 node-fetch 패키지를 다운해 node-js에서 사용가능하게 한다.
+
+## Webpack
+
+신 js css .. 를 구 js css ..로 바꿔줌
+
+entry >> 변경,처리하고 싶은 파일
+output >> 변경, 처리 후 해당 파일을 path에 설정된 경로 안에 저장
+
+path.resolve(\_\_dirname, "assets", "js") >> 절대경로로 만들어줌
