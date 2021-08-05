@@ -163,3 +163,9 @@ output >> 변경, 처리 후 해당 파일을 path에 설정된 경로 안에 �
 path.resolve(\_\_dirname, "assets", "js") >> 절대경로로 만들어줌
 
 use :[loader] 안에 있는 loader들은 오른쪽에서 왼쪽 순으로 실행된다
+
+## nodemon.json
+
+ignore를 사용하여 벡엔드나 프론트엔드 재시작시 무시할 것을 설정
+
+## scss
