@@ -158,6 +158,8 @@ javascript fetch함수는 브라우저에서 사용할 수 있는것이기 때�
 신 js css .. 를 구 js css ..로 바꿔줌
 
 entry >> 변경,처리하고 싶은 파일
-output >> 변경, 처리 후 해당 파일을 path에 설정된 경로 안에 저장
+output >> 변경, 처리 후 해당 파일을 path에 설정된 경로 안에 저장, 절대경로로 만들시 해당 dir를 생성하고 그 안에 파일이 만들어진다.
 
 path.resolve(\_\_dirname, "assets", "js") >> 절대경로로 만들어줌
+
+use :[loader] 안에 있는 loader들은 오른쪽에서 왼쪽 순으로 실행된다
