@@ -3,7 +3,9 @@ import User from "../models/User";
 
 export const home = async (req, res) => {
   try {
-    const videos = await Video.find({}).sort({ createdAt: "desc" }); // 생성된 순서로 내림차순
+    const videos = await Video.find({})
+      .sort({ createdAt: "desc" })
+      .populate("owner"); // 생성된 순서로 내림차순, owner object
   } catch {
     return res.render("error");
   }
@@ -109,7 +111,7 @@ export const search = async (req, res) => {
       title: {
         $regex: new RegExp(keyword, "i"),
       },
-    });
+    }).populate("owner");
   }
   return res.render("search", { pageTitle: "Search", videos });
 };
