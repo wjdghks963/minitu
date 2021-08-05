@@ -2,11 +2,12 @@ import express from "express";
 import {
   getEdit,
   postEdit,
-  finishGithubLogin,
   logout,
   see,
   startGithubLogin,
+  finishGithubLogin,
   getChangePassword,
+  postChangePassword,
 } from "../controllers/userController";
 import {
   protectedMiddleware,

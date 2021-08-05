@@ -25,6 +25,9 @@ scripts는 실행하고 싶은 것
 dependencies에 해당하는 모듈 다 설치, 프로젝트가 작동하기 위해 필요한 것
 devDependencies 개발자에게 필요한 dependencies
 
+npm run dev:server
+npm run dev:asset
+
 ## babel
 
 최신 js를 컴파일 = nodejs가 js를 문제 없이 사용할 수 있게 컴파일 해줌

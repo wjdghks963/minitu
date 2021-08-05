@@ -1,9 +1,9 @@
 import express from "express";
 import {
-  getEdit,
   watch,
-  postEdit,
   getUpload,
+  getEdit,
+  postEdit,
   postUpload,
   deleteVideo,
 } from "../controllers/videoController";
@@ -25,7 +25,7 @@ videoRouter
   .route("/upload")
   .all(protectedMiddleware)
   .get(getUpload)
-  .post(videoUpload.single(video).postUpload);
+  .post(videoUpload.fields([{ name: "video" }, { name: "thumb" }]), postUpload);
 
 export default videoRouter;
 

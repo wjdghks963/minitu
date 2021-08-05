@@ -2,23 +2,20 @@ import Video from "../models/Video";
 import User from "../models/User";
 
 export const home = async (req, res) => {
-  try {
-    const videos = await Video.find({})
-      .sort({ createdAt: "desc" })
-      .populate("owner"); // 생성된 순서로 내림차순, owner object
-  } catch {
-    return res.render("error");
-  }
-  return res.render("home", { pageTitle: `Home`, videos });
+  const videos = await Video.find({})
+    .sort({ createdAt: "desc" })
+    .populate("owner"); // 생성된 순서로 내림차순, owner object
+
+  return res.render("home", { pageTitle: "Home", videos });
 };
 
 export const watch = async (req, res) => {
   const { id } = req.params;
-  const video = await (await Video.findById(id)).populate("owner");
+  const video = await Video.findById(id).populate("owner").populate("comments");
   if (!video) {
-    return res.status(404).render("404", { pageTitle: "Video not found" });
+    return res.render("404", { pageTitle: "Video not found." });
   }
-  return res.render("watch", { pageTitle: video.title, video, owner });
+  return res.render("watch", { pageTitle: video.title, video });
 };
 
 export const getEdit = async (req, res) => {

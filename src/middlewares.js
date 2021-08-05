@@ -1,8 +1,8 @@
 import multer from "multer";
 
 export const localMiddleware = (req, res, next) => {
-  res.session.loggedIn = Boolean(req.session.loggedIn); // login TURE or FALSE
-  req.locals.siteName = "Wetube"; // siteName
+  res.locals.loggedIn = Boolean(req.session.loggedIn); // login TURE or FALSE
+  res.locals.siteName = "Wetube"; // siteName
   res.locals.loggedInUser = req.session.user || {}; // pug에서 #{loggedInUser}만 써도 req.session.user을 사용 가능함
   next();
 };

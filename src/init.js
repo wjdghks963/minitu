@@ -6,6 +6,6 @@ import app from "./server";
 const PORT = 4000;
 
 const handleListening = () =>
-  console.log(`Server listening on http://loaclhost:${PORT}`);
+  console.log(`Server listening on http://localhost:${PORT}`);
 
 app.listen(PORT, handleListening); // listen에는 callback있음
