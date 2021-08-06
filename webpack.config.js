@@ -2,7 +2,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const path = require("path");
 
 module.exports = {
-  entry: "./src/client/js/main.js",
+  entry: {
+    main: "./src/client/js/main.js",
+    videoPlayer: "./src/client/js/videoPlayer.js",
+  },
   mode: "development",
   watch: true,
   plugins: [
@@ -11,7 +14,7 @@ module.exports = {
     }),
   ],
   output: {
-    filename: "js/main.js", // js dir안에 main.js로 아웃풋 생성
+    filename: "js/[name].js", // js dir안에 위에서 설정한 entry의 name으로  [name].js로 아웃풋 생성
     path: path.resolve(__dirname, "assets"),
     clean: true, // ouput folder를 build 전에 clear 해줌
   },

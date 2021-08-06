@@ -82,6 +82,9 @@ block content => 이 블록 안에 넣고 싶은 것을 넣는다.
 h1 #{var}은 h1=var와 같다
 mixin의 이름(받게될 객체)
 
+주석 : // >> 모든 사람들에게 볼수있음
+//- >> 프론트에서 안보임
+
 ### Mixin
 
 ## mongodb, mongoose
