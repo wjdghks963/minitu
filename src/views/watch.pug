@@ -2,6 +2,7 @@ extends base.pug
 
 
 block content 
+    div#videoContainer
     video(scr="/" + video.fileUrl, controls)
     div 
         button#play Play 
@@ -13,6 +14,8 @@ block content
             span#totalTime  00:00
         div 
             input(type="range",step="1",value=0,min="0")#timeLine
+        div 
+            button#fullScreen Enter Full Screen
 
     div
         p=video.description
