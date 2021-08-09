@@ -100,6 +100,15 @@ Video.findById(id) // id를 찾음
 Video.exists() // 결과 true or false ()안엔 filter
 Video.findByIdAndDelete & findOneAndRemove ==> 특별한 이유 없는 이상 대부분 delete
 
+- 문제
+  npm run dev:server 후
+  DB Error MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
+  에러 발생
+
+= 해결
+제어판 > 관리도구 > 서비
+MongoDB Server를 시작
+
 #### populate
 
 Model.findById(id).populate("props")
