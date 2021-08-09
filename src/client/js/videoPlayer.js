@@ -7,8 +7,11 @@ const totalTime = document.getElementById("totalTime");
 const timeLine = document.getElementById("timeLine");
 const fullScreenBtn = document.getElementById("fullScreen");
 const videoContainer = document.getElementById("videoContainer");
+const videoControls = document.getElementById("videoControls");
 
-let volumeValue = 0.5;
+let controlsTimeout = null;
+let controlsMovementTimeout = null;
+let volumeValue = 0.5; // volume 기본값
 video.volume = volumeValue;
 
 const handlePlayClick = (e) => {
@@ -47,7 +50,7 @@ const handleVolumeChange = (e) => {
     video.muted = false;
     muteBtn.innerText = "Mute";
   }
-  volumeValue = value; // 전역변수로 설정시켜서 mute전의 값으로 되돌림
+  volumeValue = value; // volumeValue를 전역변수로 설정시켜서 mute전의 값으로 되돌림
   video.volume = value; // 실시간 값 변경
 };
 
@@ -82,6 +85,29 @@ const handleFullScreen = () => {
   }
 };
 
+const hideControls = () => {
+  videoControls.classList.remove("showing");
+};
+
+const handleMouseMove = () => {
+  // 들어갔다 왔을때 Timeout 초기화
+  if (controlsTimeout) {
+    clearTimeout(controlsTimeout);
+    controlsTimeout = null;
+  }
+  // video 내에서 마우스 움직일때 Timeout 초기화
+  if (controlsMovementTimeout) {
+    clearTimeout(controlsMovementTimeout);
+    controlsMovementTimeout = null;
+  }
+  videoControls.classList.add("showing");
+  controlsMovementTimeout = setTimeout(hideControls, 3000);
+};
+
+const handleMouseLeave = () => {
+  controlsTimeout = setTimeout(hideControls, 3000);
+};
+
 playBtn.addEventListener("click", handlePlayClick);
 muteBtn.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolumeChange);
@@ -89,3 +115,5 @@ video.addEventListener("loadedmetadata", handleLoadedMetaData);
 video.addEventListener("timeupdate", handleTimeUpdate);
 timeLine.addEventListener("input", handleTimeLineChange);
 fullScreenBtn.addEventListener("click", handleFullScreen);
+video.addEventListener("mousemove", handleMouseMove);
+video.addEventListener("mouseleave", handleMouseLeave);
