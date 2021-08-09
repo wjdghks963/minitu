@@ -142,6 +142,9 @@ req.query = url 뒤 query문 => {title:"hello"}
 
 form에 action을 입력하지 않으면 브라우저가 같은 url에 post req를 보내려는 것을 안다.
 
+staus() : render()하기 전에 상태 코드를 정함
+sendStatus() : 상태 코드를 보내고 끝냄
+
 ## Regular Expression
 
 ## DB
