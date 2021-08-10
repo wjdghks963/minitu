@@ -27,11 +27,20 @@ block content
     div 
         small Uploaded By
             a(href=`/users/${video.owner._id}`)=video.owner.name
-    if String(video.owner) === String(loggedInUser._id)
-        a(href=`${video.id}/edit`) Edit Video &rarr;
-        br
-        a(href=`${video.id}/delete`) Delete Video &rarr;
+        small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+        if String(video.owner) === String(loggedInUser._id)
+            a(href=`${video.id}/edit`) Edit Video &rarr;
+            br
+            a(href=`${video.id}/delete`) Delete Video &rarr;
+
+
+        div.video__comments 
+            form.video__comment-form#commentForm
+                textarea(cols="30", rows="10",placeholder="Write Comment") 
+                button Add Comment 
+        
 
 
 block scripts 
     script(src="/static/js/videoPlayer.js")
+    script(src="/static/js/commentSection.js")

@@ -180,6 +180,8 @@ dotenv 패키지가 .env 파일을 읽고 접근시켜줌 // require("dotenv").c
 
 javascript fetch함수는 브라우저에서 사용할 수 있는것이기 때문에 node-fetch 패키지를 다운해 node-js에서 사용가능하게 한다.
 
+JS를 통해서 URL 변경 없이 request를 보낼 수 있게 만들어줌
+
 ## Webpack
 
 신 js css .. 를 구 js css ..로 바꿔줌

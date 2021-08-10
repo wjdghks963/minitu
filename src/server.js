@@ -15,6 +15,7 @@ app.set("view engine", "pug"); // view engine 템플릿을 pug로 설정
 app.set("views", process.cwd() + "/src/views"); // views파일이 scr안에 있게 만들었음
 app.use(logger);
 app.use(express.urlencoded({ extended: true })); // express가 form의 값들을 이해할 수 있게하고 js형식으로 변환
+app.use(express.json()); // express가 request로 들어오는 obj=string을 json(js object)로
 
 app.use(
   session({
