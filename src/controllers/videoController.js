@@ -73,7 +73,8 @@ export const postUpload = async (req, res) => {
       // video model이 존재하는 경우 create 가능
       title,
       description,
-      fileUrl,
+      fileUrl: video[0].path,
+      thumbUrl: thumb[0].path,
       owner: _id,
       hashtags: Video.formatHashtags(hashtags),
     });
