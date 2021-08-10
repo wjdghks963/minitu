@@ -152,6 +152,7 @@ export const getLogin = (req, res) =>
 
 export const logout = (req, res) => {
   req.session.destory(); // session을 없앰
+  req.flash("info", "Bye Bye");
   return res.redirect("/");
 };
 
@@ -201,6 +202,7 @@ export const postEdit = async (req, res) => {
 
 export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
+    req.flash("error", "Can't change password");
     return redirect("/");
   }
   return res.render("users/change-password", { pageTitle: "Change Password" });
@@ -226,9 +228,10 @@ export const postChangePassword = async (req, res) => {
       errorMessage: "The password doen't match",
     });
   }
+
   user.password = newPassword;
   await user.save(); // user password를 newPassword로 바꾸고 User pre안에 있는 것을 이용해 저장한다.
-
+  req.flash("info", "Password Updated");
   return res.redirect("/users/logout");
 };
 

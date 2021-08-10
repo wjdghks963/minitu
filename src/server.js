@@ -6,6 +6,7 @@ import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRouter";
 import userRouter from "./routers/userRouter";
 import { localMiddleware } from "./middlewares";
+import flash from "express-flash";
 import apiRouter from "./routers/apiRouter";
 
 const app = express();
@@ -27,7 +28,7 @@ app.use(
     }),
   })
 );
-
+app.use(flash());
 app.use(localMiddleware);
 app.use("/uploads", express.static("uploads")); // expose folder >>  사진을 노출시켜준다
 app.use("/static", express.static("assets"));

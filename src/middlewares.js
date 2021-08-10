@@ -1,5 +1,6 @@
 import multer from "multer";
 
+// local은 template에서 사용가능
 export const localMiddleware = (req, res, next) => {
   res.locals.loggedIn = Boolean(req.session.loggedIn); // login TURE or FALSE
   res.locals.siteName = "Wetube"; // siteName
@@ -12,6 +13,7 @@ export const protectedMiddleware = (req, res, next) => {
   if (req.session.loggedIn) {
     next();
   } else {
+    req.flash("error", "Not authorized");
     return res.redirect("/login");
   }
 };
@@ -21,6 +23,7 @@ export const publicOnlyMiddleware = (req, res, next) => {
   if (!req.session.loggedIn) {
     return next();
   } else {
+    req.flash("error", "Not authorized");
     return res.redirect("/");
   }
 };
