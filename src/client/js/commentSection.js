@@ -3,6 +3,7 @@ const { async } = require("regenerator-runtime");
 
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
+const delBtn = document.querySelectorAll(".video__comment-delBtn");
 
 const addComment = (text, id) => {
   const videoComments = document.querySelector(".video__comments ul");
@@ -17,7 +18,7 @@ const addComment = (text, id) => {
   span2.innerText = "❌";
   newComment.appendChild(icon);
   newComment.appendChild(span); // append는 밑에 달고
-  videoComments.prepend(newComment); // prepend는 element를 밑이 아니라 위에 추가시켜줌
+  videoComments.prepend(newComment); // prepend는 element를 밑이 아니라 위부터 추가시켜줌
 };
 
 const handleSubmit = async (event) => {
@@ -32,7 +33,7 @@ const handleSubmit = async (event) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-    },
+    }, // back-end에게 json을 보낸다고 알려주는 headers
     body: JSON.stringify({ text }),
   });
 
@@ -42,6 +43,25 @@ const handleSubmit = async (event) => {
     addComment(text, newCommentId);
   }
 };
+
+const handleRemoveComment = async (event) => {
+  const comment = event.target.parentElement;
+  const commentId = comment.dataset.id;
+  const response = await fetch(`/api/comments/${commentId}/delete`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ commentId }),
+  });
+  if (response.status === 201) {
+    comment.remove();
+  }
+};
+
 if (form) {
   form.addEventListener("submit", handleSubmit);
 }
+delBtn.forEach((item) => {
+  item.addEventListener("click", handleRemoveComment);
+});
