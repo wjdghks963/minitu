@@ -35,15 +35,33 @@ babel.config.json >> @babel/preset-env
 
 ## server
 
-항상 켜져 있는 온라인에 연결된 컴퓨터, request를 listen하고 있음
-브라우저가 request하고 반응함
-GET = 홈페이지를 가져와라
+express를 사용해 서버를 만든다.
+
+```javascript
+import express from "express";
+
+const app = express();
+```
+
+#### 서버란 
+
+항상 켜져 있는 온라인에 연결된 컴퓨터, request를 listen하고 있음 == 브라우저가 request하고 respond함 ex) 카카오톡, 유튜브 영상 클릭 후 시청 
+
+GET = 웹에 접속할때 브라우저가 홈페이지를 가져와라 명령함
+POST = 
+DELETE = 
+PUT = 
+
+```javascript
 // req,res는 express에서 나온것
 const handleHome = (req, res) => {
 return res.end();
-// res.end(); = res를 종료 시킴, res.send("~~"); = ()안에 있는 것을 보냄
+// res.end(); = res를 종료 시킴, res.send("~~"); // ()안에 있는 것을 보냄
 };
+
+
 get("route", handler) use listen
+```
 
 ## MiddleWare
 
