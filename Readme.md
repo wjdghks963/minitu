@@ -41,11 +41,17 @@ express를 사용해 서버를 만든다.
 import express from "express";
 
 const app = express();
+const handleListening = ()=>{console.log(`${PORT}에서 서버를 구동중입니다.`)}
+app.listen(PORT,handleListening)
 ```
 
 #### 서버란 
 
 항상 켜져 있는 온라인에 연결된 컴퓨터, request를 listen하고 있음 == 브라우저가 request하고 respond함 ex) 카카오톡, 유튜브 영상 클릭 후 시청 
+
+PORT의 존재 이유 
+내가 req을 보낼때 내 PORT를 이용해서 보내고 res를 받는다. ex) 인터넷 세계의 창문
+높은 port번호는 비어있는 확률이 높기 때문에 이 프로젝트에선 높은 번호를 사용한다.
 
 GET = 웹에 접속할때 브라우저가 홈페이지를 가져와라 명령함
 POST = 
@@ -66,6 +72,27 @@ get("route", handler) use listen
 ## MiddleWare
 
 req <> middleware <> res
+
+```javascript
+const middleWare = (req,res,next)=>{
+res.send("I'm middleware");
+next();
+}
+
+const handleHome = (req,res)=>{
+return res.end("I'm home");
+}
+
+app.get("/",middleWare,handleHome);
+
+```
+
+```
+app.use(middleware)
+app.get....
+```
+
+app.use는 앱 전체적인 미들웨어로 get위치 보다 위에 있어야 적용된다.
 
 미들웨어 안에 있는 next가 없는 return은 미들웨어를 중단 시킴
 == 다음 것을 실행시키지 않음 따라서 마지막 controller은 next를 안씀
