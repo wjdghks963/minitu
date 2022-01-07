@@ -104,15 +104,73 @@ morgan("dev")은 middleware(res,req,next를 가진 function)을 return해줌
 
 method, route, status code, 응답시간을 console log에 나타냄
 
+---
+
+<br/>
+
 ## Router
 
-app.use("/",global) >> global.get("/home",~~)
+Express 애플리케이션에는 앱 라우터가 내장되어 있다.
+
+라우터는 미들웨어 자체처럼 작동하므로 app.use()에 대한 인수로 또는 다른 라우터의 use() 메서드에 대한 인수로 사용할 수 있다.
+최상위 익스프레스 객체에는 새로운 라우터 객체를 생성하는 Router() 메서드가 있다.
+
+일반적으로 router는 기능에 맞게 나눈다.
+
+```javascript
+Gobal Router
+
+const globalRouter = express.Router();
+
+/ -> HOME
+/join -> JOIN
+/search -> SEARCH
+
+User Router
+
+const userRouter = express.Router();
+
+/user/edit -> user정보 edit
+
+Video Router
+
+const videoRouter = express.Router();
+
+/videos/deit -> video정보 edit
+```
+
+
+router과  router를 컨트롤 하는  controller는 다른 파일로 저장해서 사용하는게 복잡해지지 않는다.
+
+
+```javascript
+한개의 Router당 하나씩 라우터에서 컨트롤한다.
+ex) app.use("/",globalRouter)이라면 globalRouter파일 안에서 하나씩 설정해 나간다.
+
+globalRouter.js
+
+const globalRouter = express.Router();
+globalRouter.get("/",handleHome);
+
+
 export controller >> controller를 하나 씩 export
 
+```
+
+id같은 고유번호가 필요한땐 :를 앞에 붙혀야만 express가 변수라고 인식한다.
+이런 변수를 사용할때는 일반적인 문자 url을 변수로 파악할 수 있기때문에 변수를 사용한 url를 다른 일반적인 문자 url보다 위에 둬야한다.
+만약 이런 변수를 문자들이 아닌 숫자들만 허용할 수 있게 하려면 변수명 뒤에 (\\d+)를 붙히면 된다.
+
+그외 optional한 사항은 https://www.regexpal.com 에서 볼 수 있다.
+
+```javascript
 videoRouter.route("/:id(\\d+)").get(getEdit).post(postEdit);
 은 밑 두줄과 같다.
 videoRouter.get("/:id(\\d+)/edit", getEdit);
 videoRouter.post("/:id(\\d+)/edit", postEdit);
+```
+
+--- 
 
 ## Pug
 
