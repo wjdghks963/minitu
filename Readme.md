@@ -109,6 +109,9 @@ import logger from "morgan";
 
 const logger = logger("dev");
 app.use(logger);
+
+console
+GET / 304 2.321ms - -
 ```
 
 
