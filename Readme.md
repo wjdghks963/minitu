@@ -100,9 +100,17 @@ res.send는 마지막에 하나만 == use나 get안에 많은 middleware가 있�
 
 get 위에 use안에 미들웨어를 순서대로 넣어서 사용하면 get안에 미들웨어로서 안넣어도 됨
 
-morgan("dev")은 middleware(res,req,next를 가진 function)을 return해줌
+morgan 패키지는 node.js 서버로 구성된 웹 환경에서 HTTP request 로그를 관리하기 위한 미들웨어이다.
+morgan(option)에서 option은 여러가지가 있다. 이 프로젝트에서 쓰이는
+morgan("dev")은 middleware(res,req,next를 가진 function)을 색깔을 포함해 이쁘게 return해주며 method, route, status code, 응답시간을 console log에 나타낸다.
 
-method, route, status code, 응답시간을 console log에 나타냄
+```javascript
+import logger from "morgan";
+
+const logger = logger("dev");
+app.use(logger);
+```
+
 
 ---
 
