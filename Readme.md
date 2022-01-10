@@ -185,13 +185,78 @@ videoRouter.post("/:id(\\d+)/edit", postEdit);
 
 ## Pug
 
-app.set("view engine", pug) == pug를 템플릿으로 사용
-! pug파일이 view dir안에 있어야함 view dir은 현재 작업중인 폴더(cwd) 안에 있어야함
-!! cwd는 노드를 시작하는 dir이다
-함수 = (req,res) => {res.render("pug파일 이름")} ==> pug를 렌더링함
+```javascript
+npm i pug
+```
 
-extends base.pug => base.pug로 부터 뼈대를 가져옴
-block content => 이 블록 안에 넣고 싶은 것을 넣는다.
+Pug는 Node.js 및 브라우저용 __JavaScript로 구현된 고성능 템플릿 엔진__
+html파일을 바로 렌더링 가능하지만 request를 통해 각종 변수를 전달하지 못해 정해진 화면 밖에 보여주지 못하고 중복되는 부분들을 하나하나 다 넣어야하기 때문에 사용한다.
+
+react와 같은 FE framework를 사용하면 템플릿 엔진 없이 view부분 만들 수 있다.
+
+```javascript
+server.js file
+
+app.set("view engine", pug) // pug를 view engine으로 사용
+```
+조건
+1. pug파일이 view dir안에 있어야함 view dir은 현재 작업중인 폴더(cwd) 안에 있어야함 따라서 view라는 폴더를 만들고 그 안에 pug파일들을 넣는다.
+
+express에게 뷰엔진으로 쓴다는것과 views dir에 있는 view(pug)를 찾도록 설정되어있기 떄문에 따로 import하지 않아도 된다.
+```javascript
+(req,res) => {res.render("pug파일 이름")} //  pug를 렌더링함
+```
+2. cwd는 노드를 시작하는 dir이다
+```javascript
+console.log(process.cwd()) // 현재 작업중인 dir을 알려줌
+
+express의 현재 작업중인 dir을 설정하는 방법
+app.set("views", process.cwd() + "/src/views");
+```
+
+### partials
+
+반복되는 코드가 있다면 사용하며 include를 사용한다.
+
+```
+file
+
+html
+  include (파일 위치.pug)
+```
+
+### extends
+
+pug는 템플릿 상속을 지원하기때문에 block과 extends를 통해 상속이 가능하다.
+base file을 만든 후 파일에 따라 수정한다.
+
+1. extends base.pug => base.pug로 부터 뼈대를 가져옴
+
+2. block content => 이 블록 안에 넣고 싶은 것을 넣는다. 변수와 같은 공간
+사용하려면 extends를 받아 block 안에 넣고 싶은 content를 넣는다.
+block 변수 로 block은 여러개 만들 수 있다.
+```javascript
+doctype html
+html(lang="ko")
+    head
+        block head
+    body
+        block content
+```
+
+```javascript 
+상속받는 파일
+extends base.pug
+
+block content
+  ~~~~~
+block head
+  ~~~
+```
+
+### 템플릿에서 변수
+
+res.render("pug",{변수:"pug에 적용할 content"})
 
 h1 #{var}은 h1=var와 같다
 mixin의 이름(받게될 객체)
@@ -199,7 +264,7 @@ mixin의 이름(받게될 객체)
 주석 : // >> 모든 사람들에게 볼수있음
 //- >> 프론트에서 안보임
 
-### Mixin
+
 
 ## mongodb, mongoose
 
