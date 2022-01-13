@@ -181,6 +181,26 @@ videoRouter.get("/:id(\\d+)/edit", getEdit);
 videoRouter.post("/:id(\\d+)/edit", postEdit);
 ```
 
+
+제일앞에 /가있으면 절대경로
+```
+index.js
+
+const app = express();
+app.use("/video", movieRouter);
+
+movieRouter.js
+
+const movieRouter = express.Router();
+movieRouter.get("/", home);
+
+
+a(href="/video/edit")--->localhost:4000/video/edit
+a(href="video/edit")--->localhost:4000/videos/video/edit
+a(href=`${video.id}/edit`)--->localhost:4000/videos/1/edit
+```
+
+
 --- 
 
 ## Pug
@@ -326,6 +346,47 @@ mixin의 이름(받게될 객체)
 
 
 
+## DB  GET/POST
+
+form을 이용해 input value를 서버에 post할때
+```
+form.pug
+
+form(method="POST")
+  input(type="text", value=title)
+  input(type="submit" value="add")
+
+videoController.js
+
+const add = (req,res) =>{
+const {title} = req.query
+
+return res.render
+}
+
+
+videoRouter.js
+
+videoRouter.post("/:id/add",add)
+  
+```
+
+### req.body
+
+req.body에는 form을 통해 submit된 데이터의 키-값 쌍을 포함
+기본적으로는 undefined이며 express.json() 또는 express.urlencoded()와 같은 바디 파싱 미들웨어를 사용할 때 값을 받아옴
+
+express.urlencoded([options])
+express app가 form의 value들을 이해할 수 있는 js형식으로 바꿔줌 
+optional엔 {extended:true}가 들어간다.
+
+Express에 내장된 미들웨어 기능 urlencoded 페이로드로 들어오는 요청을 구문 분석하고 바디 파서가 기반
+
+get과 post를 할때 중복되는 url 을 가지고 있을때
+
+```
+Router.route("url").get(getF).post(postF)
+```
 ## mongodb, mongoose
 
 DB, mongoose는 몽고디비와 node.js를 연결 시켜주는 역
