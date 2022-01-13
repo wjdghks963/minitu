@@ -234,8 +234,8 @@ base file을 만든 후 파일에 따라 수정한다.
 
 2. block content => 이 블록 안에 넣고 싶은 것을 넣는다. 변수와 같은 공간
 사용하려면 extends를 받아 block 안에 넣고 싶은 content를 넣는다.
-block 변수 로 block은 여러개 만들 수 있다.
-```javascript
+block은 block 변수 형식으로 block 여러개 만들 수 있다.
+```javasript
 doctype html
 html(lang="ko")
     head
@@ -256,9 +256,69 @@ block head
 
 ### 템플릿에서 변수
 
-res.render("pug",{변수:"pug에 적용할 content"})
+```
+vi.pug
+extens index.pug
+  h1={변수}
 
-h1 #{var}은 h1=var와 같다
+res.render("vi",{변수:"변수에 적용할 content"})
+```
+
+h1 #{var}은 h1=var와 같지만 만약 text를 같이 사용하고 싶다면 ex) h1 blabal #{var}  와 같이 사용해야한다. 
+
+#### conditional
+
+pug에서 js문법으로 조건문을 사용할 수 있지만 이것은 js가 아니라 pug의 문법이다.
+
+```javascript
+if user.loggedin
+  li Hi #{user.username}
+else 
+  li please join 
+```
+#### Iteration
+
+```javascript
+controller.js
+
+const home = (req,res) => {
+let db = [1,2,3,4]
+return res.render("home", {db})
+}
+
+
+home.pug
+
+extends index.pug
+  block content
+    ul
+      each video in db
+        li video
+
+```
+### Mixins
+
+mixins은 데이터를 받을 수 있는 partial이다.
+Mixin을 사용하면 재사용 가능한 Pug 블록을 만들 수 있으며 또한 함수로 컴파일되며 인수를 사용할 수 있음.
+
+```javascript
+mixins/video.pug
+
+mixin video(info)
+  ul 
+    li=info.name
+    li=info.rate
+    li=info.char
+    
+
+home.pug
+
+include mixins/video
+
+  each info in videos
+    +video(potato)
+```
+
 mixin의 이름(받게될 객체)
 
 주석 : // >> 모든 사람들에게 볼수있음
