@@ -348,7 +348,25 @@ mixin의 이름(받게될 객체)
 
 ## DB  GET/POST
 
-form을 이용해 input value를 서버에 post할때
+form을 이용해 input value를 서버에 post할때 method="POST"를 사용한다.
+form 태그에서 action="URL"은 form에서 생성된 query같은 form-data를 서버로 보낼 때 해당 데이터가 도착할 URL이다. 
+HTML5에서부턴 반드시 필요한 속성은 아니다.
+
+ex)
+```
+form(method="GET" action="/filter")
+  input( type="text" name="name")
+  
+controller.js
+
+const getFilter = (req,res) =>{
+const {name} = req.query;
+name을 이용해 filter하는 함수 결과값은 movie
+return res.render("filter",movie)
+}
+```
+이 URL도 절대,상대주소로 나뉜다.
+
 ```
 form.pug
 
@@ -387,11 +405,91 @@ get과 post를 할때 중복되는 url 을 가지고 있을때
 ```
 Router.route("url").get(getF).post(postF)
 ```
+
+
+
+---
+
 ## mongodb, mongoose
 
-DB, mongoose는 몽고디비와 node.js를 연결 시켜주는 역
+mongo의 db형식은 jons과 유사하다.
+mongoose는 몽고디비와 node.js를 연결 시켜주는 역할
+
+**WSL에서 mongo실행**
+1. WSL 터미널을 연다
+2. 'sudo apt update' 을 입력하고 apt 업데이트
+3. 'sudo apt-get install mongodb' 을 입력하고 설치한다
+4. 'mongod --version' 을 입력하고 설치가 잘 되었는지 확인한다
+5. 'sudo service mongodb start' 을 입력하고 mongo 를 사용할 수 있게 서비스 시작
+6. 'mongo' 를 입력하면 mongo shell로 이동한다
+7. 다 사용했으면 'sudo service mongodb stop' 을 입력하고 서비스를 종료한다
+
+'sudo service mongodb status'를 입력하면 지금 mongodb 서비스가 실행중인지 알 수 있다
+실행중이면 오른쪽에 [OK] 아니면 [Fail]
+
+show db 명령어를 통해 사용중인 db들을 용량과 함께 볼 수 있다.
+
+npm에 mongoose 다운
+
+```
+npm i mongoose
+```
+
+쉘에서 mongo가 실행되었는지 확인됐다면 connection 된 mongodb주소(url)를 찾는다.
+
+mongoose와 mongodb연결
+```javascript
+db.js
+import mongoose from "mongoose";
+
+mongoose.connect("mongodb:mongodb주소",{useNewUrlParser:true,useUnifiedTopology: true,});
+const db = mongoose.connection;
+db.on("error",(error)=>console.log("DB Error", error)); // error가 발생하면 console.log
+db.once("opne",()=>console.log("connected DB")) // db와 연결이 된다면 한번만 console.log 
+
+
+app.js
+import "./db";  //app에 import함으로서 자동적으로  db에 있는 코드들이 실행되어 mongodb와 연결된다.
+
+```
+
+### Model
+
+데이터가 어떻게 생겼는지 정의
+object 구조를 설계하고 강제화 시켜서 data를 CRUD할때 db가 이 모델을 참고해서 시행한다. 
+
+모델은 스키마 정의에서 컴파일된 생성자며 모델의 인스턴스를 document라고 함. 
+모델은 기본 MongoDB 데이터베이스에서 document라고를 만들고 읽음.
+
+### Schemas
+몽구스의 모든 것은 스키마로 시작하며 각 스키마는 MongoDB 컬렉션에 매핑되고 해당 컬렉션 내 document의 모양을 정의한다.
+
+
 db를 mongoose와 연결시켜 video model을 인식시킴
-models/Video.js => 데이터가 어떻게 생겼는지 정의
+
+```javascript
+mongoose.model(modelName, schema);
+```
+
+models/Video.js
+```javascript
+import mongoose from "mongoose";
+
+// Schema에 required나 lowercase등 옵션이 필요하다면 title:{type:Sting, required:true, lowercase:true}와 같이 사용한다.
+const videoSchema = new mongoose.Schema({
+  title:String,
+  description:String,
+  createdAt: Date,
+  hashtags:[{type:String}]
+});
+
+const Video = mongoose.model("Video",videoSchema);
+export default Video;
+```
+app.js
+```
+import "./models/Video"
+```
 
 새롭게 생성하는 object 내에 id를 랜덤으로 부여해줌
 
