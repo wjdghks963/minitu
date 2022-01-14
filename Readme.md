@@ -490,6 +490,8 @@ app.js
 ```
 import "./models/Video"
 ```
+Video = model
+video = DB 안에 있는 object
 
 새롭게 생성하는 object 내에 id를 랜덤으로 부여해줌
 
@@ -523,10 +525,8 @@ model: "User",
 });
 // path : 먼저 populate하고 싶은 것 >>> videos를 먼저 populate하고 owner
 
-## Model
 
-Video = model
-video = DB 안에 있는 object
+
 
 ## CRUD
 
