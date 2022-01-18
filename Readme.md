@@ -115,7 +115,7 @@ GET / 304 2.321ms - -
 ```
 
 
----
+
 
 <br/>
 
@@ -169,8 +169,8 @@ export controller >> controller를 하나 씩 export
 ```
 
 id같은 고유번호가 필요한땐 :를 앞에 붙혀야만 express가 변수라고 인식한다.
-이런 변수를 사용할때는 일반적인 문자 url을 변수로 파악할 수 있기때문에 변수를 사용한 url를 다른 일반적인 문자 url보다 위에 둬야한다.
-만약 이런 변수를 문자들이 아닌 숫자들만 허용할 수 있게 하려면 변수명 뒤에 (\\d+)를 붙히면 된다.
+이런 변수를 사용할때는 __일반적인 문자 url을 변수로 파악할 수 있기때문에 변수를 사용한 url를 다른 일반적인 문자 url보다 위에 둬야한다.__
+만약 이런 변수를 문자들이 아닌 __숫자들만 허용할 수 있게 하려면 변수명 뒤에 (\\d+)__ 를 붙히면 된다.
 
 그외 optional한 사항은 https://www.regexpal.com 에서 볼 수 있다.
 
@@ -414,6 +414,7 @@ Router.route("url").get(getF).post(postF)
 
 mongo의 db형식은 jons과 유사하다.
 mongoose는 몽고디비와 node.js를 연결 시켜주는 역할
+몽고DB는 ObjectID를 24바이트 16진 문자열 표현으로 반환한다. (Hexadecimal 정규식 == [0-9a-f]{24}  0~9,a~f까지의 24자 string) 
 
 **WSL에서 mongo실행**
 1. WSL 터미널을 연다
@@ -500,6 +501,16 @@ Video.findById(id) // id를 찾음
 Video.exists() // 결과 true or false ()안엔 filter
 Video.findByIdAndDelete & findOneAndRemove ==> 특별한 이유 없는 이상 대부분 delete
 
+
+form에서 받은 title로 db에 있는 값 찾기 __얻은 값은 정규식으로 표현해줘야 한다__
+exec를 promise를 반환한다.
+```javascript
+const { title } = req.query;
+  let movies = [];
+  if (title) {
+    movies = await Movie.find({ title: RegExp(title) }).exec();
+  }
+```
 - 문제
   npm run dev:server 후
   DB Error MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
@@ -509,6 +520,39 @@ Video.findByIdAndDelete & findOneAndRemove ==> 특별한 이유 없는 이상 �
 제어판 > 관리도구 > 서비
 MongoDB Server를 시작
 
+
+### MiddleWare
+
+미들웨어(pre또는 post훅이라고도 불림)는 비동기 함수를 실행하는 동안 제어가 전달되는 함수
+스키마에 CUD하기 전에 middleware를 넣을 수 있다.
+
+모델의 object를 save할때 미들웨어 함수를 통해 원하는 property를 고정적으로 수정할 수 있다. ex) genres같은 한개의 string을 map을 이용해 분해를 고정적으로 가능 "1,2,3,4" >> "1","2","3","4" 
+
+```javascript
+Model.js
+
+
+ModelSchema.pre("save", asnyc function(){
+console.log(this) // model Object의 property들이 나옴 
+})
+```
+---
+
+### Statics
+
+Model에 static함수를 추가할 수 있음
+Schema에서 컴파일된 Model에 static "class" method 추가
+
+Schema.js
+```javascript
+Schema.static("FuncName", function(){return Func});
+```
+해당 Schema에서 "FuncName"으로 설정한 function을 사용할 수 있음.
+
+controller.js
+```javascript
+Schema.findByIdAndUpdate(id,{props:Schema.FuncName()})
+```
 #### populate
 
 Model.findById(id).populate("props")
