@@ -503,7 +503,7 @@ Video.findByIdAndDelete & findOneAndRemove ==> 특별한 이유 없는 이상 �
 
 
 form에서 받은 title로 db에 있는 값 찾기 __얻은 값은 정규식으로 표현해줘야 한다__
-exec를 promise를 반환한다.
+exec() promise를 반환한다.
 ```javascript
 const { title } = req.query;
   let movies = [];
@@ -511,6 +511,51 @@ const { title } = req.query;
     movies = await Movie.find({ title: RegExp(title) }).exec();
   }
 ```
+
+db에 새로운 모델의 데이터를 넣기 위해선
+
+1. create를 사용
+```javascript
+const { title, summary, year, rating, genres } = req.body;
+  await Movie.create({
+    title,
+    summary,
+    year,
+    rating,
+    genres: genres.split(",").map((word) => `${word}`)
+  });
+```
+
+
+2. new Model을 사용
+  save()를 사용해야한다. 
+
+```javascript
+const { title, summary, year, rating, genres } = req.body;
+  const movie = new Movie({
+    title,
+    summary,
+    year,
+    rating,
+    genres: genres.split(",").map((word) => `${word}`)
+  });
+  
+  await movie.save();
+```
+
+
+ __new Model, Model.create의 차이점__
+ 
+ new Model : 새로운 데이터가 담긴 JS Object를 생성해주며 await save()와 같이 써야 db에 저장된다.
+ Model.create : 새로운 데이터가 담긴 Object를 자동적으로 db에 바로 저장한다.
+ 
+ 
+
+
+
+
+
+
 - 문제
   npm run dev:server 후
   DB Error MongooseServerSelectionError: connect ECONNREFUSED 127.0.0.1:27017
