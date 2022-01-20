@@ -721,6 +721,20 @@ session id가 있으면 session object에 정보 추가 가능
 
 Session store는 session을 저장하는 곳이지만 , 매번 코드를 저장하면 서버가 재시작되면서 이것이 사라짐 테스트를 하는 곳이기 때문
 
+
+#### res.locals
+
+request 범위가 지정된 response 로컬 변수를 포함하는 객체이므로 request, response 주기동안 렌더링된 view(Pug나 EJS같은 템플릿 엔진)에서만 사용가능
+
+이 속성은 request path, 인증된 사용자, 사용자 설정 등과 같은 request level의 정보를 노출하는 데 유용함.
+
+```javascript
+app.use(function (req, res, next) {
+res.locals.user = req.user
+res.locals.authenticated = !req.user.anonymous
+next()
+})
+```
 ## .env
 
 변수는 대문자로
