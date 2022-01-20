@@ -430,6 +430,15 @@ mongoose는 몽고디비와 node.js를 연결 시켜주는 역할
 
 show db 명령어를 통해 사용중인 db들을 용량과 함께 볼 수 있다.
 
+
+**terminal에서 db내용물 보기**
+
+1. mongo
+2. show dbs
+3. use 프로젝트명
+4. show collections
+
+
 npm에 mongoose 다운
 
 ```
@@ -464,7 +473,12 @@ object 구조를 설계하고 강제화 시켜서 data를 CRUD할때 db가 이 �
 
 ### Schemas
 몽구스의 모든 것은 스키마로 시작하며 각 스키마는 MongoDB 컬렉션에 매핑되고 해당 컬렉션 내 document의 모양을 정의한다.
-
+unique라는 property를 이용해 해당하는 값을 unique하게 설정해 줄 수 있다.
+```javascript
+const UserSchema = mongoose.Schema({
+  email: { type: String, required: true, unique: true },
+  username: { type: String, required: true, unique: true },});
+```
 
 db를 mongoose와 연결시켜 video model을 인식시킴
 
@@ -550,7 +564,8 @@ const { title, summary, year, rating, genres } = req.body;
  Model.create : 새로운 데이터가 담긴 Object를 자동적으로 db에 바로 저장한다.
  
  
-
+model에 unique한 property가 존재하며 저장할때는 예외처리를 해줘야한다.
+ex) email을 unique로 설정했다면 email이 db에 존재하면 어떻게 할건지 처리를 해줘야한다.
 
 
 
@@ -636,14 +651,66 @@ sendStatus() : 상태 코드를 보내고 끝냄
 
 ## bcrypt
 
-password를 해쉬로 변환해줌
+그냥 바로 password를 db에 저장하면 보안상 좋지 않다.
+
+bcrypt는  password 문자열을 해쉬로 변환해주는데 해쉬화하는 숫자도 옵션으로 정할 수 있다.
+
+```javasciprt
+npm i bcrypt
+```
+
+```javasciprt
+  await bcrypt.hash(data,hash 횟수,callback)
+```
+
+아웃풋 값은 입력값이 같을시 똑같이 나오지만 해쉬화된 아웃풋을 입력값으로 입력시 저번 입력값이 나오지 않는다.
+abc => 12as34qw =>! abc
+
+해시한 암호값을 db에서 다시 찾을 때는 compare를 이용한다.
+```
+  const ok = await bcrypt.compare(form에서 받은 data, db에 있던 data);
+```
+
+---
+
+## status code
+
+브라우저가 서버와의 소통이되는 상태를 말한다.
+상태코드에 따라 url 히스토리를 남기는데 error 상태를 보내면 기록을 하지 않는다. 
+
+
+일반적인 소통이 된 상태를 200 OK 대를 사용한다.
+4--번대는  error다.
+
+
+
 
 ## Session, Cookies
 
 **브라우저와 벡엔드 사이의 memory, history 같은 것
 브라우저와 벡엔드 사이에 관계가 존재해야함**
 
+```
+npm i express-session
+```
+
 express-session은 브라우저가 백엔드와 상호 작용할 때마다 session이라는 middleware라는 곳에 cookie를 보내줌, cookie는 백엔드가 브라우저에 주는 정보인데 cookie에는 정해진 규칙이 존재해 매번 벡엔드에 req를 할 때 브라우저는 알아서 그 req에 cookie를 붙인다.
+
+1. express가 알아서 해당하는 브라우저를 위한 session id를 만들고 브라우저에게 준다.
+2. 브라우저가 쿠키에 할당된 session id를 저장하고 express에서도 그 session id를 db에다 저장한다. 
+3. 브라우저한테 보내서 쿠키에 저장한 session id를 브라우저가 url에 요청을 보낼때마다 session id를 요청과 함께 보낸다.
+4. 그러므로서 벡엔드에서 어떤 유저가 들어왔는지 알수 있다.
+
+```javascript
+app.use(
+  session({
+    secret:"",
+    resave: true,
+    saveUninitialized:true
+})
+)
+```
+
 
 cookie에는 어떤 정보든 넣을 수 있으며 여기선 session id를 넣는다.
 session id가 있으면 session object에 정보 추가 가능
