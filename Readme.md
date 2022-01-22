@@ -2,6 +2,7 @@
 
 ## Router
 
+```
 / -> Home
 /join -> Join
 /login -> Login
@@ -18,6 +19,9 @@
 /videos/upload -> Upload Video
 /videos/comment -> Comment on a video
 /videos/comments/delete -> Delete A Comment of a Video
+
+```
+
 
 ## json
 
@@ -71,7 +75,10 @@ get("route", handler) use listen
 
 ## MiddleWare
 
+요청과 응답 사이에 있는 창구
+
 req <> middleware <> res
+
 
 ```javascript
 const middleWare = (req,res,next)=>{
