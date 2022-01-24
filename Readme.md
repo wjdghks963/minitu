@@ -300,6 +300,24 @@ res.render("vi",{변수:"변수에 적용할 content"})
 
 h1 #{var}은 h1=var와 같지만 만약 text를 같이 사용하고 싶다면 ex) h1 blabal #{var}  와 같이 사용해야한다. 
 
+#### res.locals
+
+req범위가 지정된 res로컬 변수를 포함하는 객체이므로 req,res 주기동안 렌더링된 view에서만 사용가능함.
+이 속성은 request path, 인증된 사용자, 사용자 설정 등과 같은 request level의 정보를 노출하는 데 유용하다.
+Response Object이며 기본적으로 비어있다(null).
+locals를 통해 express와 template가 data를 소통할 수 있다.
+
+```
+app.use((req,res,next)=>{
+res.locals.something = "cool" ;
+...
+});
+
+home.pug
+
+h1 this is ${something}     // this is cool
+```
+
 #### conditional
 
 pug에서 js문법으로 조건문을 사용할 수 있지만 이것은 js가 아니라 pug의 문법이다.
@@ -677,7 +695,7 @@ npm i bcrypt
   await bcrypt.hash(data,hash 횟수,callback)
 ```
 
-아웃풋 값은 입력값이 같을시 똑같이 나오지만 해쉬화된 아웃풋을 입력값으로 입력시 저번 입력값이 나오지 않는다.
+아웃풋 값은 입력값이 같을시 똑같이 나오지만 해쉬화된 아웃풋을 입력값으로 입력시 저번 입력값이 나오지 않는다.(deterministic)
 abc => 12as34qw =>! abc
 
 해시한 암호값을 db에서 다시 찾을 때는 compare를 이용한다.
@@ -701,8 +719,17 @@ abc => 12as34qw =>! abc
 
 ## Session, Cookies
 
+HTTP는 비연결성(connectionless), 무상태(stateless) 의 특징을 가지고 있다.
+
+무상태란 서버가 client의 이전 상태를 유지하지 않는다. ex) 특정 페이지에서 새로고침 할때마다 로그인을 계속 해야함  
+따라서 벡엔드에 요청을 할때마다 누구인지 알기 위해 무엇인가를 브라우저에 남겨주며 서버에 요청이 들어올때 client가 누구인지 알아낸다.
+
 **브라우저와 벡엔드 사이의 memory, history 같은 것
 브라우저와 벡엔드 사이에 관계가 존재해야함**
+
+1. Session이란 벡엔드와 브라우저 간에 어떤 활동을 했는지 기억하는 것(기한이 존재한다.)이며 작동하기 위해선 벡엔드와 브라우저가 서로에 대한 정보를 가지고 있어야한다. 
+
+2. Cookie란 
 
 ```
 npm i express-session
