@@ -131,6 +131,7 @@ GET / 304 2.321ms - -
 
 
 
+
 <br/>
 
 ## Router
@@ -445,8 +446,12 @@ Router.route("url").get(getF).post(postF)
 ## mongodb, mongoose
 
 mongo의 db형식은 jons과 유사하다.
-mongoose는 몽고디비와 node.js를 연결 시켜주는 역할
 몽고DB는 ObjectID를 24바이트 16진 문자열 표현으로 반환한다. (Hexadecimal 정규식 == [0-9a-f]{24}  0~9,a~f까지의 24자 string) 
+DB에 절대로 직접 파일을 저장하지 않는다. 대신 파일의 위치를 저장한다.
+
+mongoose는 몽고디비와 node.js를 연결 시켜주는 역할
+
+
 
 **WSL에서 mongo실행**
 1. WSL 터미널을 연다
@@ -776,6 +781,50 @@ res.locals.authenticated = !req.user.anonymous
 next()
 })
 ```
+
+## Multer
+
+Multer는 주로 파일 업로드에 사용되는 multipart/form-data를 처리하기 위한 node.js 미들웨어이며 multipart(multipart/form-data)가 아닌 form을 처리하지 않는다.
+
+```enctype="multipart/form-data"```는 file을 벡엔드로 보내기 위해 필요한 encoding type(enctype)이다.
+```
+npm i multer
+```
+
+```
+multer({dest:"uploads/",options:[]})
+```
+
+edit-profile/pug
+```
+form(method="POST", enctype="multipart/form-data")
+    label(for="avatar") Avatar
+    input(type="file", id="avatar", name="avatar", accept="image/*")
+```
+
+middlewares.js
+```javascript
+export const uploadsFiles = multer({dest:"uploads/"})   // uploads라는 폴더를 자동적으로 만들고 그 안에 올린 파일을 저장한다.
+```
+
+userRouter.js
+```javascript
+userRouter.route("/edit").get(getEdit).post(uploadsFiles.single("avatar"), postEdit)  // req.file은 'avater' file이 된다. middleware의 순서는 굉장히 중요하다. 
+```
+single()은 하나의 파일만 업로드하는 거고 이 파일의 input name을 middleware에 전달해야한다. 그리고 single의 name은 form의 name과 같아야한다.
+
+
+### static
+
+기본적으로 파일을 업로드한 url은 존재하지 않기 때문에 router 설정을 해줘야한다.
+
+express.static("노출시킬 폴더 네임");
+
+server.js
+```javascript
+app.("/uploads",express.static("/uploads"))
+```
+
 ## .env
 
 변수는 대문자로
