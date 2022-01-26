@@ -804,7 +804,7 @@ form(method="POST", enctype="multipart/form-data")
 
 middlewares.js
 ```javascript
-export const uploadsFiles = multer({dest:"uploads/"})   // uploads라는 폴더를 자동적으로 만들고 그 안에 올린 파일을 저장한다.
+export const uploadsFiles = multer({dest:"uploads/"})   // uploads라는 경로를 가진 폴더를 자동적으로 만들고 그 안에 올린 파일을 저장한다.
 ```
 
 userRouter.js
@@ -812,7 +812,6 @@ userRouter.js
 userRouter.route("/edit").get(getEdit).post(uploadsFiles.single("avatar"), postEdit)  // req.file은 'avater' file이 된다. middleware의 순서는 굉장히 중요하다. 
 ```
 single()은 하나의 파일만 업로드하는 거고 이 파일의 input name을 middleware에 전달해야한다. 그리고 single의 name은 form의 name과 같아야한다.
-
 
 ### static
 
@@ -823,6 +822,73 @@ express.static("노출시킬 폴더 네임");
 server.js
 ```javascript
 app.("/uploads",express.static("/uploads"))
+```
+
+### fs(file system) 모듈
+
+node.js의 프레임 워크 중 파일을 처리하는 모듈이다. method를 사용해 파일을 읽고 쓰기 등이 가능하다.
+
+대표적인 fs.readFile, fs.readDir을 본다.
+
+```
+npm i fs
+```
+파일을 읽는 method는 동기(fs.readFileSync)와 비동기(fs.readFile)이 있다. 
+파일을 꼭 읽고 실행해야하는 코드가 아니라면 node의 장점을 살리기 위해 비동기에 callback함수를 이용하는 것을 추천한다.
+
+
+1. fs.readFile
+postHome함수는 post form에서 받은 file(.txt)을 이용해 file의 내용을 읽고(multer를 이용해 만들어진 dir안에서 받아와) 그 내용을 html로 표현한다.
+
+
+```javascript
+import fs from "fs";
+import multer from "multer";
+
+const uploadText = multer({ dest: "read/" });
+
+const postHome = (req, res) => {
+  const { filename } = req.file;
+  const data = fs.readFileSync(`./read/${filename}`, "utf8");
+  res.send(`${data}`);
+};
+```
+
+<br/>
+
+```javascript
+import fs from "fs";
+import multer from "multer";
+
+const uploadText = multer({ dest: "read/" });
+
+const postHome = (req, res) => {
+  const { filename } = req.file;
+  fs.readFile(`./read/${filename}`, "utf8",(err,data)=>{
+  if(err) {return console.log(err);}
+   
+   res.send(`${data}`);
+  });
+
+};
+```
+
+
+2. fs.readdir (비동기)
+multer로 업로드한 dir안에 있는 파일명들을 보여준다. 특별히 처리가 없다면 file을 올릴때 hash화된 파일명으로 표현된다.
+(err,files) 두개의 인자를 callback은 받는다. files는 dir안 file들의 이름의 배열이다.
+
+프로젝트안에 read Dir을 찾아 그 안에 있는 파일들을 view에게 넘겨줌
+
+```javascript
+const getHome = (req, res) => {
+  fs.readdir("./read", (err, files) => {
+    if (err) {
+      console.log(err);
+      console.log("error난다");
+    }
+    res.render("index", { files });
+  });
 ```
 
 ## .env
