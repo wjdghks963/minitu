@@ -926,10 +926,13 @@ webpack.config.js 파일 생성
 
 ```javascript
 module.exports = {
-  entry: "./src/client/js/index.js",
+  entry: {
+  main: "./src/client/js/index.js",
+  videoPlayer: "./src/client/js/videoPlayer.js",
+  }
   mode:"development",
   output:{
-    filename:"main.js",
+    filename:"js/[name].js",
     path:path.resolve(__dirname,"assets","js")
   },
   module:{
@@ -966,7 +969,7 @@ package.json
 npm run assets
 ```
 
-entry >> 변경,처리하고 싶은 파일 (source code)
+entry >> 변경,처리하고 싶은 파일 (source code) 만약 entry 파일이 여러개라면 filename을 적고 ouput의 filename에 경로를 [name]으로 entry의 filename으로 변경되어 처리될 수 있게 한다.
 output >> 변경, 처리 후 해당 파일을 path에 설정된 경로 안에 저장, 설정된 경로는 절대경로를 요구하며 절대경로로 만들시 해당 dir를 생성하고 그 안에 파일이 만들어진다.
 
 ```path.resolve(__dirname, "assets", "js")``` >> 절대경로로 만들어줌(```/현프로젝트절대경로/assets/js```)
@@ -988,6 +991,28 @@ use :[loader] 안에 있는 loader들은 오른쪽에서 왼쪽 순으로 실행
 ## nodemon.json
 
 ignore를 사용하여 벡엔드나 프론트엔드 재시작시 무시할 것을 설정
+
+
+# Video Player
+
+[HTMLMediaElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement)
+Default Video HTMLtag도 괜찮지만 JS와 CSS로 새로만들어서 옵션(HTMLMediaElement)으로 custom한다.
+
+
+play, pause
+
+```javascript
+const handlePlay = (e) =>{
+  if(video.paused){
+    video.play();
+  }else{
+    video.pause();
+  }
+}
+```
+
+[이 프로젝트에 있는 Player.js](https://github.com/wjdghks963/minitu/blob/master/src/client/js/videoPlayer.js)
+
 
 ## FFmpeg
 
