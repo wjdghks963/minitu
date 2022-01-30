@@ -980,6 +980,13 @@ output >> 변경, 처리 후 해당 파일을 path에 설정된 경로 안에 �
 
 ### loader
 
+[Webpakc Loader 공식 ](https://webpack.kr/concepts/loaders/)
+
+Node.js에서 실행되며 Node.js에서 가능한 모든 작업을 수행 할 수 있다.
+loader는 모듈의 소스 코드에 변경 사항을 적용, 파일을 import 하거나 load할 때 전처리를 할 수 있다.
+loader는 다른 빌드 도구의 “태스크”와 유사하며 프런트엔드 빌드 단계를 처리하는 강력한 방법을 제공한다.
+
+
 files에 적용한 것들을 정의한 rulse array안에 있는 것으로 files들을 변환시켜줄 package
 
 
