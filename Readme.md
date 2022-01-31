@@ -1018,6 +1018,20 @@ const handlePlay = (e) =>{
 }
 ```
 
+
+new Date()와 toISOString을 통해 formatting한 video time을 가질 수 있다.
+new Date()는 1970-01-01 00:00:00이 default 시간이고 toISOString은 단순화한 확장 ISO 형식(ISO 8601)의 문자열을 반환
+```javascript
+new Date(videoTime * 1000).toISOString().substr(11,8)
+```
+
+
+원하는 element에 style을 추가하는 방법은 아래와 같다.
+
+```javascript
+videoController.style.color = "white";
+```
+
 [이 프로젝트에 있는 Player.js](https://github.com/wjdghks963/minitu/blob/master/src/client/js/videoPlayer.js)
 
 
