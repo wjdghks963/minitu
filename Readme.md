@@ -1035,6 +1035,57 @@ videoController.style.color = "white";
 
 [이 프로젝트에 있는 Player.js](https://github.com/wjdghks963/minitu/blob/master/src/client/js/videoPlayer.js)
 
+# Reacorder
+
+## navigator.MediaDevices.getUserMedia()
+
+MediaDevices 인터페이스의 getUserMedia() 메서드는 사용자에게 미디어 입력 장치 사용 권한을 요청하며, 사용자가 수락하면 요청한 미디어 종류의 트랙을 포함한 MediaStream (en-US)을 반환
+해당 함수의 constraints는 요청할 미디어 유형과 각각에 대한 요구사항을 지정하는  MediaStreamConstraints 객체이며 매개변수는 video,audio 두개의 매개변수로 구성하고 있고 요청할 미디어 유형에 대해 설명한다. 
+
+```javascript
+  const stream = await navigator.mediaDevices.getUserMedia({
+    audio: true,
+    video: false
+  });
+```
+
+## regenerator-runtime
+
+Regenerator로 컴파일된 생성기 및 비동기 함수를 위한 독립 실행형 런타임
+
+```javascript
+npm i regenerator-runtime
+```
+
+## MediaRecorder
+
+MediaRecorder()
+MediaStream Recording API의 MediaRecorder 인터페이스는 미디어를 쉽게 녹화할 수 있는 기능을 제공
+
+stream
+기록될 MediaStream 이 소스 미디어는 navigator.mediaDevices.getUserMedia()를 사용하여 생성된 스트림이나 audio, video 또는 canvas 요소에서 가져올 수 있다.
+
+```javascript
+const recoder = new MediaRecorder(stream);
+  recoder.ondataavailable = (e) => {const video = URL.createObjectURL(e.data)};
+  recoder.start();
+  setTimeout(() => {
+    recoder.stop();
+  }, 1000);
+```
+
+## createObjectURL 
+
+createObjectURL 은 브라우저 메모리에서만 가능한 URL을 만들어 준다. 주어진 객체를 가리키는 URL을 DOMString으로 반환하고 해당 URL은 자신을 생성한 창의 document가 사라지면 함께 무효화된다.
+즉 내 파일을 가르키는 URL이다.
+
+```javascript
+recoder.ondataavailable = (e) => {const video = URL.createObjectURL(e.data)};
+
+// blob:http://~~~~
+```
+
+<hr/>
 
 ## FFmpeg
 
