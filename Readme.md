@@ -1,4 +1,4 @@
-<h1 style="color:yellow"> Wetube Reloaded</h1>
+ <h1>Wetube Reloaded</h1>
 
 ## Router
 
@@ -41,7 +41,9 @@ npm run dev:asset
 
 ## babel
 
-최신 js를 컴파일 = nodejs가 js를 문제 없이 사용할 수 있게 컴파일 해줌
+> Babel is a JavaScript compiler
+
+최신 js를 컴파일 = nodejs가 js를 문제 없이 다른 실행 환경에서도 사용할 수 있도록 컴파일 해줌
 babel.config.json >> @babel/preset-env
 
 ## server
@@ -57,6 +59,8 @@ app.listen(PORT,handleListening)
 ```
 
 #### 서버란 
+
+[웹 서버란? MDN](https://developer.mozilla.org/ko/docs/Learn/Common_questions/What_is_a_web_server)
 
 항상 켜져 있는 온라인에 연결된 컴퓨터, request를 listen하고 있음 == 브라우저가 request하고 respond함 ex) 카카오톡, 유튜브 영상 클릭 후 시청 
 
