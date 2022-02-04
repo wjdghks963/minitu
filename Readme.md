@@ -1093,11 +1093,28 @@ recoder.ondataavailable = (e) => {const video = URL.createObjectURL(e.data)};
 
 ## FFmpeg
 
+모든 디바이스들이 webm file을 이해할 수 있는것이 아니기 때문에 변환이 필요할 때가 있다.
+
 어떤 종류의 미디어 파일이든 다룰 수 있음
 비디오 압축, 비디오에서 오디오 추출, 비디오 스크린샷 ...
+본래 컴퓨터 안 즉, 벡엔드에서 실행되어야한다. = cost가 높다.
 WA를 사용해서 실행비용이 큰 FFmpeg를 브라우저에서 실행 시킴
 
 - WebAssembly
+
+https://www.youtube.com/watch?v=KjgDxBLv0bM
+
+WebAssembly file은 binary file로 코드를 읽지도 쓰지도 않고 그저 컴파일한다.
+
+내가 짠 JS code => 간단한 Parsing => Bytecode(기계 친화적 코드) => 실행 
+
+FFmpeg WebAssembly는 WebAssembly에서 제공하는 브라우저 및 노드용 FFmpeg
+ffmpeg.wasm은 FFmpeg의 순수한 Webassembly/Javascript 포트이며 사용자 컴퓨터의 능력을 사용해 비디오 및 오디오 녹음, 변환, 스트리밍 등을 브라우저 내부에서 처리 할 수 있도록 한다.
+FFmpeg WebAssembly를 사용하는 이유는 FFmpeg를 사용해서 브라우저가 비디오 파일을 변환하기 위함이다.
+
+```javscript
+npm install @ffmpeg/ffmpeg @ffmpeg/core
+```
 
 프론트엔드에서 매우 빠른 속도로 코드를 실행 가능함
 실행 비용이 큰 프로그램들을 웹 브라우저에서 실행 가능
