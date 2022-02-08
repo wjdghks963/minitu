@@ -43,7 +43,7 @@ export const postJoin = async (req, res) => {
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const pageTitle = "Login";
-  const user = await User.exists({ username, socialOnly: false });
+  const user = await User.findOne({ username, socialOnly: false });
   // 계정이 존재하는 체크
   if (!user) {
     return res.status(400).render("login", {
@@ -53,6 +53,7 @@ export const postLogin = async (req, res) => {
   }
   // password 일치하는지 체크
   const ok = await bcrypt.compare(password, user.password);
+  console.log(user.password);
   if (!ok) {
     return res.status(400).render("login", {
       pageTitle,
