@@ -1145,6 +1145,27 @@ scripts에서 build:server를 실행해 build dir을 생성하고 안에 설정�
 npm run  build:server
 ```
 
+## Oauth
+
+다른 사용자가 OAuth 앱을 승인하도록 할 수 있다.
+GitHub의 OAuth 구현은 웹 브라우저에 대한 액세스 권한이 없는 앱에 대한 표준 인증
+
+Web application flow
+
+앱 사용자에게 권한을 부여하는 웹 애플리케이션 흐름
+
+1. 로그인하려는 사이트에서 유저의 GitHub identity를 request하기 위해 유저를 GitHub 페이지로 리다이렉트시킨다.
+
+2. 유저는 리다이렉트된 GitHub에서 승인을 하고, GitHub에 의해 다시 로그인하려는 사이트로 리다이렉트된다.
+
+3. 로그인 하려는 사이트는 유저의 액세스 토큰을 통해 API에 접근한다.
+
+[URLSearchParams](https://developer.mozilla.org/ko/docs/Web/API/URLSearchParams)
+URLSearchParams 인터페이스는 URL의 쿼리 문자열에 대해 작업할 수 있는 유틸리티 메서드를 정의
+
+[URLSearchParams.toString()](https://developer.mozilla.org/ko/docs/Web/API/URLSearchParams/toString)
+toString() 은 URLSearchParams 인터페이스의 메소드로서, URL에서 사용할 수 있는 쿼리 문자열을 리턴
+
 ## Heroku
 
 heroku git : git reposi의 commit 기록을 본다

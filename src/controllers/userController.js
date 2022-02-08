@@ -43,7 +43,7 @@ export const postJoin = async (req, res) => {
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const pageTitle = "Login";
-  const user = await User.exists({ username, socialOnly: false }); // username과 password로 로그인 하는 user
+  const user = await User.exists({ username, socialOnly: false });
   // 계정이 존재하는 체크
   if (!user) {
     return res.status(400).render("login", {
@@ -98,7 +98,6 @@ export const finishGithubLogin = async (req, res) => {
   ).json();
 
   if ("access_token" in tokenRequest) {
-    //access api
     const { access_token } = tokenRequest;
     const apiUrl = "https://api.github.com";
     const userData = await (
