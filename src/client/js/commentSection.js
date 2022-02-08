@@ -37,7 +37,7 @@ const handleSubmit = async (event) => {
     body: JSON.stringify({ text }),
   });
 
-  if (status === 201) {
+  if (response.status === 201) {
     textarea.value = ""; // 댓글을 post 후 textarea를 빈칸으로 만든다.
     const { newCommentId } = await response.json();
     addComment(text, newCommentId);
