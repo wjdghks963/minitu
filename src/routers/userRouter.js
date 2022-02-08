@@ -25,7 +25,7 @@ userRouter
   .post(avatarUpload.single("avatar"), postEdit);
 // all함수는 get,post 등 어떤 http method를 사용하든지 해당 middleware를 사용할 수 있게 해준다.
 userRouter
-  .route("/password")
+  .route("/change-password")
   .all(protectedMiddleware)
   .get(getChangePassword)
   .post(postChangePassword);

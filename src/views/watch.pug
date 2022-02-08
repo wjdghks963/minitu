@@ -23,11 +23,16 @@ block content
 
     div
         p=video.description
+        br
         small=video.createdAt
+
     div 
-        small Uploaded By
+        small Uploaded By 
             a(href=`/users/${video.owner._id}`)=video.owner.name
+        br
+        br
         small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+        br
         if String(video.owner) === String(loggedInUser._id)
             a(href=`${video.id}/edit`) Edit Video &rarr;
             br
@@ -51,4 +56,5 @@ block content
 
 block scripts 
     script(src="/static/js/videoPlayer.js")
-    script(src="/static/js/commentSection.js")
+    if loggedIn
+        script(src="/static/js/commentSection.js")

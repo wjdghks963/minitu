@@ -1,4 +1,5 @@
 import User from "../models/User";
+import Video from "../models/Video";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 
@@ -153,6 +154,7 @@ export const getLogin = (req, res) =>
 export const logout = (req, res) => {
   req.session.destory(); // session을 없앰
   req.flash("info", "Bye Bye");
+
   return res.redirect("/");
 };
 
@@ -169,13 +171,13 @@ export const postEdit = async (req, res) => {
     file, // = req.file  안에는 avatar img가 있음
   } = req;
   let searchParam = []; // 빈 배열 안에 email username을 넣고 수정을 하면 그 안에서 같은 것들이 존재하면 에러가 뜨게함
-  if (sessioEmail !== email) {
+  if (sessionEmail !== email) {
     searchParam.push({ email });
   }
   if (sessionUsername !== username) {
     searchParam.push({ username });
   }
-  if (sessionParam.length > 0) {
+  if (searchParam.length > 0) {
     const foundUser = await User.findOne({ $or: searchParam });
     if (foundUser && foundUser._id.toString() !== _id) {
       return res.status(HTTP_BAD_REQUEST).render("edit-profile", {
@@ -210,7 +212,7 @@ export const getChangePassword = (req, res) => {
 export const postChangePassword = async (req, res) => {
   const {
     session: {
-      user: { _id, password },
+      user: { _id },
     },
     body: { oldPassword, newPassword, newPasswordConfirmation },
   } = req;
@@ -247,10 +249,9 @@ export const see = async (req, res) => {
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found" });
   }
-  const videos = await Video.find({ owner: user._id });
+
   return res.render("users/profile", {
     pageTitle: user.name,
     user,
-    videos,
   });
 };
