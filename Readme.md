@@ -771,6 +771,23 @@ session id가 있으면 session object에 정보 추가 가능
 
 Session store는 session을 저장하는 곳이지만 , 매번 코드를 저장하면 서버가 재시작되면서 이것이 사라짐 테스트를 하는 곳이기 때문
 
+# !! req.session.destroy()
+
+req.session.destroy()는 `TypeError: req.session.destory is not a function`라는 오류가 있었다.
+
+express-session을 사용할 때 req.session.destroy를 사용하게 되는데 cookie-session을 사용하고 있기 때문에 req.session.destory에서 에러가 난다고 하는 것이 이유라는데 해결법은 `req.session == null`을 사용하는 것이다.
+하지만 이래도 오류가 해결이 되지 않아서 찾아보다가 해결법을 찾게되었다.
+
+https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=rwans0397&logNo=220672064234
+
+```javascript
+req.session.destroy(function () {
+  req.session;
+});
+```
+
+req.session 만 입력하면 생성된 모든 세션을 삭제한다는 뜻이고 객체처럼 req.session.name을 하시면 더 자세한 세션을 삭제할 수 있다고 한다.
+
 #### res.locals
 
 request 범위가 지정된 response 로컬 변수를 포함하는 객체이므로 request, response 주기동안 렌더링된 view(Pug나 EJS같은 템플릿 엔진)에서만 사용가능

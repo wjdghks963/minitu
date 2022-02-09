@@ -152,7 +152,10 @@ export const getLogin = (req, res) =>
   res.render("login", { pageTitle: "Login" });
 
 export const logout = (req, res) => {
-  req.session.destory(); // session을 없앰
+  // req.session.destory(); // session을 없앰
+  req.session.destroy(function () {
+    req.session;
+  });
   req.flash("info", "Bye Bye");
 
   return res.redirect("/");
