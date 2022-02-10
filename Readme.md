@@ -1185,9 +1185,33 @@ toString() 은 URLSearchParams 인터페이스의 메소드로서, URL에서 사
 
 ## Heroku
 
-heroku git : git repo의 commit 기록을 본다
+heroku git : git repo의 commit 기록을 본다 평소에 쓰는 git CLI를 이용하는게 아닌 heroku CLI를 이용하는 것이기 때문에 `git add .`를 사용해 git repo에 commit 하는 것과 다르다.
+
+`heroku logs --tail`은 실시간으로 heroku log를 볼 수 있어 어디서 에러가 나는지 알 수 있다.
 
 > > 코드를 바꾸면 무조건 commit 해야 한다. & gitignore에 있어도 안됌
+
+위와 같은 이유때문에 보안 설정에 사용했던 .env파일은 올릴 수 없기 떄문에 heroku의 admin panel이 필요하다.
+
+1. heroku project >> settings
+2. Config Vars에 변수와 value를 설정한다.
+
+> git push heroku master 시에 발생하는 오류
+
+```
+fatal: 'heroku' does not appear to be a git repository
+```
+
+heroku git:remote -a [앱이름]
+
+<hr/>
+
+## MongoDB Altas
+
+1. 새로운 project 생성
+2. database(cluster) 생성
+3. cluster connect 이후 접속 가능한 IP 설정. 이때 DB에 직접 접속할 수 있도록 하기 위해선 username과 password설정이 필요하다.
+4. 이후 DB URL을 받고 설정해 준다.
 
 #### urls
 
