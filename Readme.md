@@ -1217,6 +1217,14 @@ github 기준으로 Authorization callback URL을 localhost로 설정한 것을 
 
 <hr/>
 
+## Github에서의 배포
+
+` git push origin master`명령어를 통해 수정된 코드들이 적용되어 웹이 build된다.
+
+해당하는 branch는 배포가 가능한 상태여야한다.
+
+<hr/>
+
 ## MongoDB Altas
 
 1. 새로운 project 생성
