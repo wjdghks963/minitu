@@ -1185,7 +1185,7 @@ toString() 은 URLSearchParams 인터페이스의 메소드로서, URL에서 사
 
 ## Heroku
 
-heroku git : git reposi의 commit 기록을 본다
+heroku git : git repo의 commit 기록을 본다
 
 > > 코드를 바꾸면 무조건 commit 해야 한다. & gitignore에 있어도 안됌
 
