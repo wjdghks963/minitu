@@ -1185,7 +1185,12 @@ toString() 은 URLSearchParams 인터페이스의 메소드로서, URL에서 사
 
 ## Heroku
 
-heroku git : git repo의 commit 기록을 본다 평소에 쓰는 git CLI를 이용하는게 아닌 heroku CLI를 이용하는 것이기 때문에 `git add .`를 사용해 git repo에 commit 하는 것과 다르다.
+heroku git : git repo의 commit 기록을 본다 평소에 쓰는 git CLI를 이용하는게 아닌 heroku CLI를 이용하는 것이기 때문에 `git push`를
+사용해 git repo에 commit 하는 것과 다르다.
+
+add . 와 commit 까지는 똑같은 방법으로 하지만 push를 할때는 `git push heroku master`를 사용한다.
+
+push를 하고 나서는 package.json에 있는 build script를 실행한다.
 
 `heroku logs --tail`은 실시간으로 heroku log를 볼 수 있어 어디서 에러가 나는지 알 수 있다.
 
@@ -1203,6 +1208,12 @@ fatal: 'heroku' does not appear to be a git repository
 ```
 
 heroku git:remote -a [앱이름]
+
+## heroku에서 앱 생성 후 OAUTH
+
+github 기준으로 Authorization callback URL을 localhost로 설정한 것을 대신해 heroku에서 생성된 URL을 넣는다.
+
+공식앱과 test 앱을 따로 하기 위해서 앱을 두개 만드는 것을 추천한다.
 
 <hr/>
 
