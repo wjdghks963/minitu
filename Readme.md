@@ -1232,6 +1232,20 @@ github 기준으로 Authorization callback URL을 localhost로 설정한 것을 
 3. cluster connect 이후 접속 가능한 IP 설정. 이때 DB에 직접 접속할 수 있도록 하기 위해선 username과 password설정이 필요하다.
 4. 이후 DB URL을 받고 설정해 준다.
 
+<hr/>
+
+## AWS
+
+1. AWS S3에서 버킷 생성
+   버킷은 AWS내에서 unique해야한다.
+
+2. IAM에서 API key 생성
+   사용자를 추가할때 권한허용을 잘 생각해서 필요한 것만 선택 후 API key를 발급 받는다.
+
+3. Multer S3 설치
+   AWS S3용 스트리밍 Multer 스토리지 엔진
+   `npm i multer-s3`
+
 #### urls
 
 mongoDB Atals : https://cloud.mongodb.com/v2/61151af9f0fbff04a56e4fe3#clusters
