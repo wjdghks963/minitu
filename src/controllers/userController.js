@@ -190,10 +190,12 @@ export const postEdit = async (req, res) => {
     }
   }
 
+  const isHeroku = precess.env.NODE_ENV === "production";
+
   const updateUser = await User.findByIdAndUpdate(
     _id,
     {
-      avatarUrl: file ? file.location : avatarUrl, // 새로운 avatar가 있으면 주소주고 없으면 본래 있는 아바타 Url준다.
+      avatarUrl: file ? (isHeroku ? file.location : file.path) : avatarUrl, // 새로운 avatar가 있으면 주소주고 없으면 본래 있는 아바타 Url준다.
       name,
       email,
       username,
