@@ -1166,6 +1166,7 @@ npm run  build:server
 
 다른 사용자가 OAuth 앱을 승인하도록 할 수 있다.
 GitHub의 OAuth 구현은 웹 브라우저에 대한 액세스 권한이 없는 앱에 대한 표준 인증
+원하는 사이트에서 Oauth를 이용하기 위해선 사이트가 권장하는 코드를 임의로 수정하지 못하고 규격에 무조건 맞춰야한다. [commit](https://github.com/wjdghks963/minitu/commit/799a954814d9826a4e531f37b13e484f54313be4)
 
 Web application flow
 
@@ -1191,6 +1192,7 @@ heroku git : git repo의 commit 기록을 본다 평소에 쓰는 git CLI를 이
 add . 와 commit 까지는 똑같은 방법으로 하지만 push를 할때는 `git push heroku master`를 사용한다.
 
 push를 하고 나서는 package.json에 있는 build script를 실행한다.
+해당 코드들을 포함한 웹을 build 후에 deploy된다.
 
 `heroku logs --tail`은 실시간으로 heroku log를 볼 수 있어 어디서 에러가 나는지 알 수 있다.
 
